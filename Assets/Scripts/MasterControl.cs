@@ -14,8 +14,8 @@ public class MasterControl : MonoBehaviour
     public CounterHit counterHit;
 
     private const int startupFrames = 7;
-    private const int activeFrames = 3;
-    private const int recoveryFrames = 14;
+    private const int activeFrames = 2;
+    private const int recoveryFrames = 25;
     private const int confirmWindowFrames = 16;
 
     private const int opponentDefendPercentage = 50;
@@ -78,10 +78,6 @@ public class MasterControl : MonoBehaviour
             if (playerRecoveryFrame >= recoveryFrames) {
                 playerRecoveryFrame = 0;
                 playerState = CharacterState.Neutral;
-                if (currentMove == Move.Normal && opponentState == CharacterState.HitStun) {
-                    confirmCount = 0;
-                    confirmCountText.SetText(confirmCount.ToString());
-                }
                 currentMove = Move.None;
             }
         }
@@ -91,6 +87,10 @@ public class MasterControl : MonoBehaviour
             if (opponentRecoveryFrame >= confirmWindowFrames) {
                 opponentRecoveryFrame = 0;
                 opponentState = CharacterState.Neutral;
+                if (currentMove == Move.Normal) {
+                    confirmCount = 0;
+                    confirmCountText.SetText(confirmCount.ToString());
+                }
                 Debug.Log("Opponent Recovered!");
             }
         }
