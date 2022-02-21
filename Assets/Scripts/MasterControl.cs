@@ -33,8 +33,8 @@ public class MasterControl : MonoBehaviour
 
     private static System.Random rnd = new System.Random();
 
-	// Start is called before the first frame update
-	void Start() {
+    // Start is called before the first frame update
+    void Start() {
         Application.targetFrameRate = 60;
 
         // Setup button clicks
@@ -55,7 +55,7 @@ public class MasterControl : MonoBehaviour
                     // Opponent blocked
                     opponentState = CharacterState.Neutral;
                     Debug.Log("Opponent Blocked");
-				} else {
+                } else {
                     // Opponent got hit
                     opponentStun.UpdateStunOnHit();
                     counterHit.UpdateCounterHitTextOnHit();
@@ -70,8 +70,8 @@ public class MasterControl : MonoBehaviour
             if (playerActiveFrame >= activeFrames) {
                 playerActiveFrame = 0;
                 playerState = CharacterState.Recovery;
-			}
-		}
+            }
+        }
 
         if (playerState == CharacterState.Recovery) {
             playerRecoveryFrame += 1;
@@ -83,8 +83,8 @@ public class MasterControl : MonoBehaviour
                     confirmCountText.SetText(confirmCount.ToString());
                 }
                 currentMove = Move.None;
-			}
-		}
+            }
+        }
 
         if (opponentState == CharacterState.HitStun) {
             opponentRecoveryFrame += 1;
@@ -92,8 +92,8 @@ public class MasterControl : MonoBehaviour
                 opponentRecoveryFrame = 0;
                 opponentState = CharacterState.Neutral;
                 Debug.Log("Opponent Recovered!");
-			}
-		}
+            }
+        }
     }
 
     private void normalButtonClick(BaseEventData e) {
@@ -106,7 +106,7 @@ public class MasterControl : MonoBehaviour
     private void specialButtonClick(BaseEventData e) {
         if (playerState == CharacterState.Startup) {
             confirmCount = 0;
-		} else if (opponentState == CharacterState.HitStun && currentMove == Move.Normal) {
+        } else if (opponentState == CharacterState.HitStun && currentMove == Move.Normal) {
             playerState = CharacterState.Active;
             currentMove = Move.Special;
             confirmCount++;
