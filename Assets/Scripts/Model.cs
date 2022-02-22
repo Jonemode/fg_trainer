@@ -4,6 +4,7 @@ public enum CharacterState
     Startup,
     Active,
     Recovery,
+    Special,
     HitStun,
     BlockStun
 }

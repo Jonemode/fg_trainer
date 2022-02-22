@@ -8,7 +8,9 @@ public class MasterControl : MonoBehaviour
 {
     public Button normalButton;
     public Button specialButton;
-    public TMP_Text confirmCountText;
+    public TMP_Text hitConfirmCountText;
+    public TMP_Text blockConfirmCountText;
+    public TMP_Text confirmFrameText;
 
     public OpponentStun opponentStun;
     public CounterHit counterHit;
@@ -16,26 +18,32 @@ public class MasterControl : MonoBehaviour
     private const int startupFrames = 7;
     private const int activeFrames = 2;
     private const int recoveryFrames = 25;
+    private const int specialFrames = 40;
     private const int confirmWindowFrames = 16;
+    private const int hitStunRecoveryFrames = 26;
+    private const int blockStunRecoveryFrames = 24;
 
     private const int opponentDefendPercentage = 50;
 
-    private CharacterState playerState = CharacterState.Neutral;
-    private CharacterState opponentState = CharacterState.Neutral;
+    private CharacterState playerState;
+    private CharacterState opponentState;
 
     private int playerStartupFrame = 0;
     private int playerActiveFrame = 0;
     private int playerRecoveryFrame = 0;
+    private int playerSpecialFrame = 0;
     private int opponentRecoveryFrame = 0;
-    private int confirmCount = 0;
-
-    private Move currentMove = Move.None;
+    private int hitConfirmCount = 0;
+    private int blockConfirmCount = 0;
 
     private static System.Random rnd = new System.Random();
 
     // Start is called before the first frame update
     void Start() {
         Application.targetFrameRate = 60;
+
+        playerState = CharacterState.Neutral;
+        opponentState = CharacterState.Neutral;
 
         // Setup button clicks
         createButtonBinding(normalButton, normalButtonClick);
@@ -44,78 +52,131 @@ public class MasterControl : MonoBehaviour
 
     // Update is called once per frame
     void Update() {
-        if (playerState == CharacterState.Startup) {
-            playerStartupFrame += 1;
-            if (playerStartupFrame >= startupFrames) {
-                // Active frames start
-                playerStartupFrame = 0;
-                opponentStun.StunRetainmentFrame = 0;
-                playerState = CharacterState.Active;
-                if (rnd.Next(1, 100) <= opponentDefendPercentage) {
-                    // Opponent blocked
-                    opponentState = CharacterState.Neutral;
-                    Debug.Log("Opponent Blocked");
-                } else {
-                    // Opponent got hit
-                    opponentStun.UpdateStunOnHit();
-                    counterHit.UpdateCounterHitTextOnHit();
-                    opponentState = CharacterState.HitStun;
-                    Debug.Log("Opponent Hit!");
-                }
-            }
+        switch(playerState) {
+            case CharacterState.Startup:
+                handleStartupFrame();
+                break;
+            case CharacterState.Active:
+                handleActiveFrame();
+                break;
+            case CharacterState.Recovery:
+                handleRecoveryFrame();
+                break;
+            case CharacterState.Special:
+                handleSpecialFrame();
+                break;
+            default:
+                // in neutral, do nothing
+                break;
         }
 
-        if (playerState == CharacterState.Active) {
-            playerActiveFrame += 1;
-            if (playerActiveFrame >= activeFrames) {
-                playerActiveFrame = 0;
-                playerState = CharacterState.Recovery;
+        switch(opponentState) {
+            case CharacterState.HitStun:
+                handleHitStunFrame();
+                break;
+            case CharacterState.BlockStun:
+                handleBlockStunFrame();
+                break;
+            default:
+                // in neutral, do nothing
+                break;
+        }
+    }
+
+    private void handleStartupFrame() {
+        playerStartupFrame += 1;
+        if (playerStartupFrame >= startupFrames) {
+            // Active frames start
+            playerStartupFrame = 0;
+            opponentStun.StunRetainmentFrame = 0;
+            playerState = CharacterState.Active;
+            if (rnd.Next(1, 100) <= opponentDefendPercentage) {
+                // Opponent blocked
+                opponentState = CharacterState.BlockStun;
+            } else {
+                // Opponent got hit
+                opponentStun.UpdateStunOnHit();
+                counterHit.UpdateCounterHitTextOnHit();
+                opponentState = CharacterState.HitStun;
             }
         }
+    }
 
-        if (playerState == CharacterState.Recovery) {
-            playerRecoveryFrame += 1;
-            if (playerRecoveryFrame >= recoveryFrames) {
-                playerRecoveryFrame = 0;
-                playerState = CharacterState.Neutral;
-                currentMove = Move.None;
-            }
+    private void handleActiveFrame() {
+        playerActiveFrame += 1;
+        if (playerActiveFrame >= activeFrames) {
+            playerActiveFrame = 0;
+            playerState = CharacterState.Recovery;
         }
+    }
 
-        if (opponentState == CharacterState.HitStun) {
-            opponentRecoveryFrame += 1;
-            if (opponentRecoveryFrame >= confirmWindowFrames) {
-                opponentRecoveryFrame = 0;
-                opponentState = CharacterState.Neutral;
-                if (currentMove == Move.Normal) {
-                    confirmCount = 0;
-                    confirmCountText.SetText(confirmCount.ToString());
-                }
-                Debug.Log("Opponent Recovered!");
+    private void handleRecoveryFrame() {
+        playerRecoveryFrame += 1;
+        if (playerRecoveryFrame >= recoveryFrames) {
+            playerRecoveryFrame = 0;
+            playerState = CharacterState.Neutral;
+        }
+    }
+
+    private void handleSpecialFrame() {
+        playerSpecialFrame += 1;
+        if (playerSpecialFrame >= specialFrames) {
+            playerSpecialFrame = 0;
+            playerState = CharacterState.Neutral;
+        }
+    }
+
+    private void handleHitStunFrame() {
+        opponentRecoveryFrame += 1;
+        if (opponentRecoveryFrame >= hitStunRecoveryFrames) {
+            opponentRecoveryFrame = 0;
+            opponentState = CharacterState.Neutral;
+            Debug.Log("Opponent Recovered!");
+        }
+    }
+
+    private void handleBlockStunFrame() {
+        opponentRecoveryFrame += 1;
+        if (opponentRecoveryFrame >= blockStunRecoveryFrames) {
+            opponentRecoveryFrame = 0;
+            opponentState = CharacterState.Neutral;
+            Debug.Log("Opponent Recovered!");
+            if (playerState != CharacterState.Special) {
+                // Player successfully did not activate special
+                blockConfirmCount++;
+                blockConfirmCountText.SetText(blockConfirmCount.ToString());
             }
         }
     }
 
     private void normalButtonClick(BaseEventData e) {
         if (playerState == CharacterState.Neutral) {
-            currentMove = Move.Normal;
             playerState = CharacterState.Startup;
         }
     }
 
     private void specialButtonClick(BaseEventData e) {
-        if (playerState == CharacterState.Startup) {
-            confirmCount = 0;
-        } else if (opponentState == CharacterState.HitStun && currentMove == Move.Normal) {
-            playerState = CharacterState.Active;
-            currentMove = Move.Special;
-            confirmCount++;
-        } else {
-            playerState = CharacterState.Active;
-            currentMove = Move.Special;
-            confirmCount = 0;
+        if (playerState == CharacterState.Recovery) {
+            if (playerRecoveryFrame <= confirmWindowFrames) {
+                // State change possible. Opponent may have blocked.
+                playerState = CharacterState.Special;
+                if (opponentState == CharacterState.HitStun) {
+                    // Player performed special at the right time
+                    hitConfirmCount++;
+                    hitConfirmCountText.SetText(hitConfirmCount.ToString());
+                }
+                return;
+            }
         }
-        confirmCountText.SetText(confirmCount.ToString());
+
+        // Player either
+        // a) missed cancellable window
+        // b) pressed special at completely wrong time
+        // Not changing player state in this case
+        hitConfirmCount = 0;
+        blockConfirmCount = 0;
+        hitConfirmCountText.SetText(hitConfirmCount.ToString());
+        blockConfirmCountText.SetText(blockConfirmCount.ToString());
     }
 
     private void createButtonBinding(Button button, Action<BaseEventData> cb) {

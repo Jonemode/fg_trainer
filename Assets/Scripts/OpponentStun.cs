@@ -28,6 +28,9 @@ public class OpponentStun : MonoBehaviour
         RectTransform stunBarBackgroundRT = stunBarBackground.GetComponent<RectTransform>();
         stunBarMaxPts = stunBarBackgroundRT.rect.width - (2 * stunBarPaddingPts);
         stunBarIncrementPts = (stunIncrement / maxStun) * stunBarMaxPts;
+
+        // Start the stun bar at 0
+        stunBarRT.offsetMax = new Vector2(-stunBarBackgroundRT.rect.width + stunBarPaddingPts, stunBarRT.offsetMax.y);
     }
 
     // Update is called once per frame
