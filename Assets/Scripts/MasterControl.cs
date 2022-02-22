@@ -159,13 +159,14 @@ public class MasterControl : MonoBehaviour
     private void specialButtonClick(BaseEventData e) {
         if (playerState == CharacterState.Recovery) {
             if (playerRecoveryFrame <= confirmWindowFrames) {
-                // State change possible. Opponent may have blocked.
+                // Within cancel window. Opponent may have blocked.
                 playerState = CharacterState.Special;
                 if (opponentState == CharacterState.HitStun) {
                     // Player performed special at the right time
                     hitConfirmCount++;
                     hitConfirmCountText.SetText(hitConfirmCount.ToString());
                     confirmFrameText.SetText(playerRecoveryFrame.ToString());
+                    confirmFrameText.color = Color.green;
                 }
                 return;
             }
@@ -182,6 +183,7 @@ public class MasterControl : MonoBehaviour
         if (playerRecoveryFrame > 0) {
             // Show the player how late they activated special
             confirmFrameText.SetText(playerRecoveryFrame.ToString());
+            confirmFrameText.color = Color.red;
         } else {
             confirmFrameText.SetText("");
         }
