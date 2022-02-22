@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/fgTrainerScene.unity
+    guid: 0cc5d70dfe47b54409124f2428de3000
   m_configObjects: {}
