@@ -9,12 +9,11 @@ public class OpponentStun : MonoBehaviour
 
     // Using Street Fighter units
     private const float maxStun = 1000;
-    private const float stunIncrement = 100;
+    private float currentStun = 0;
 
     // Using world space units
     private float stunBarMaxPts;
-    private float stunBarIncrementPts;
-    private const float stunBarPaddingPts = 3;
+    private const float stunBarPaddingPts = 6;
 
     private const int stunRetainmentFrames = 100;
     private const float stunDecay = 1.6f;
@@ -25,20 +24,25 @@ public class OpponentStun : MonoBehaviour
     void Start()
     {
         stunBarRT = stunBar.GetComponent<RectTransform>();
+
+        // Set the left offset (padding)
+        stunBarRT.offsetMin = new Vector2(stunBarPaddingPts, stunBarRT.offsetMin.y);
+
         RectTransform stunBarBackgroundRT = stunBarBackground.GetComponent<RectTransform>();
         stunBarMaxPts = stunBarBackgroundRT.rect.width - (2 * stunBarPaddingPts);
-        stunBarIncrementPts = (stunIncrement / maxStun) * stunBarMaxPts;
 
-        // Start the stun bar at 0
-        stunBarRT.offsetMax = new Vector2(-stunBarBackgroundRT.rect.width + stunBarPaddingPts, stunBarRT.offsetMax.y);
+        redrawStunBar();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (stunBarRT.rect.width > 0 && StunRetainmentFrame == stunRetainmentFrames) {
-            float newX = stunBarRT.offsetMax.x - stunDecay;
-            stunBarRT.offsetMax = new Vector2(newX, stunBarRT.offsetMax.y);
+        if (currentStun > 0 && StunRetainmentFrame == stunRetainmentFrames) {
+            currentStun -= stunDecay;
+            if (currentStun < 0) {
+                currentStun = 0;
+            }
+            redrawStunBar();
         }
 
         if (StunRetainmentFrame < stunRetainmentFrames) {
@@ -46,14 +50,21 @@ public class OpponentStun : MonoBehaviour
         }
     }
 
-    public void UpdateStunOnHit() {
-        float currentOffsetMax = stunBarRT.offsetMax.x;
-        float newX;
-        if (stunBarRT.rect.width + stunBarIncrementPts > stunBarMaxPts) {
-            newX = -stunBarPaddingPts;
-        } else {
-            newX = currentOffsetMax + stunBarIncrementPts;
+    public void UpdateStunOnHit(int stunAmount) {
+        currentStun += stunAmount;
+        if (currentStun > maxStun) {
+            currentStun = maxStun;
         }
+
+        redrawStunBar();
+    }
+
+    public void redrawStunBar() {
+        // The offsetMax should be the distance in world points from the right side of the bar to the stun level
+        // [ [----currentStun--]<---offsetMax---->]
+        //  ^                           ^
+        //  1x padding              includes 1x padding
+        float newX = ((currentStun / maxStun) * stunBarMaxPts) - stunBarMaxPts - stunBarPaddingPts;
         stunBarRT.offsetMax = new Vector2(newX, stunBarRT.offsetMax.y);
     }
 }

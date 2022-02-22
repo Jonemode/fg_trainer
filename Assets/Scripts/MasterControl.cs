@@ -18,6 +18,7 @@ public class MasterControl : MonoBehaviour
     private const int startupFrames = 7;
     private const int activeFrames = 2;
     private const int recoveryFrames = 25;
+    private const int stunAmount = 70;
     private const int specialFrames = 40;
     private const int confirmWindowFrames = 16;
     private const int hitStunRecoveryFrames = 26;
@@ -95,7 +96,7 @@ public class MasterControl : MonoBehaviour
                 opponentState = CharacterState.BlockStun;
             } else {
                 // Opponent got hit
-                opponentStun.UpdateStunOnHit();
+                opponentStun.UpdateStunOnHit(stunAmount);
                 counterHit.UpdateCounterHitTextOnHit();
                 opponentState = CharacterState.HitStun;
             }
