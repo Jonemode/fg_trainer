@@ -145,6 +145,7 @@ public class MasterControl : MonoBehaviour
                 // Player successfully did not activate special
                 blockConfirmCount++;
                 blockConfirmCountText.SetText(blockConfirmCount.ToString());
+                confirmFrameText.SetText("");
             }
         }
     }
@@ -164,6 +165,7 @@ public class MasterControl : MonoBehaviour
                     // Player performed special at the right time
                     hitConfirmCount++;
                     hitConfirmCountText.SetText(hitConfirmCount.ToString());
+                    confirmFrameText.SetText(playerRecoveryFrame.ToString());
                 }
                 return;
             }
@@ -177,6 +179,12 @@ public class MasterControl : MonoBehaviour
         blockConfirmCount = 0;
         hitConfirmCountText.SetText(hitConfirmCount.ToString());
         blockConfirmCountText.SetText(blockConfirmCount.ToString());
+        if (playerRecoveryFrame > 0) {
+            // Show the player how late they activated special
+            confirmFrameText.SetText(playerRecoveryFrame.ToString());
+        } else {
+            confirmFrameText.SetText("");
+        }
     }
 
     private void createButtonBinding(Button button, Action<BaseEventData> cb) {
