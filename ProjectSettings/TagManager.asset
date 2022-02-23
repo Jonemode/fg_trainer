@@ -38,6 +38,18 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3370239477
+    locked: 0
+  - name: Main Sprites
+    uniqueID: 716268867
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 3310786709
+    locked: 0
+  - name: UI
+    uniqueID: 3243800557
     locked: 0
