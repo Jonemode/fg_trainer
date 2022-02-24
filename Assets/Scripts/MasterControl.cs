@@ -11,11 +11,15 @@ public class MasterControl : MonoBehaviour
     public TMP_Text hitConfirmCountText;
     public TMP_Text blockConfirmCountText;
     public TMP_Text confirmFrameText;
+    
+    public GameObject player;
 
     public OpponentStun opponentStun;
     public CounterHit counterHit;
 
-    private const int startupFrames = 7;
+    private Animator playerAnimator;
+
+    private const int startupFrames = 6;
     private const int activeFrames = 2;
     private const int recoveryFrames = 25;
     private const int stunAmount = 70;
@@ -45,6 +49,8 @@ public class MasterControl : MonoBehaviour
 
         playerState = CharacterState.Neutral;
         opponentState = CharacterState.Neutral;
+
+        playerAnimator = player.GetComponent<Animator>();
 
         // Setup button clicks
         createButtonBinding(normalButton, normalButtonClick);
@@ -91,6 +97,7 @@ public class MasterControl : MonoBehaviour
             playerStartupFrame = 0;
             opponentStun.StunRetainmentFrame = 0;
             playerState = CharacterState.Active;
+            playerAnimator.Play("cr_mk_active");
             if (rnd.Next(1, 100) <= opponentDefendPercentage) {
                 // Opponent blocked
                 opponentState = CharacterState.BlockStun;
@@ -108,6 +115,7 @@ public class MasterControl : MonoBehaviour
         if (playerActiveFrame >= activeFrames) {
             playerActiveFrame = 0;
             playerState = CharacterState.Recovery;
+            playerAnimator.Play("cr_mk_recovery");
         }
     }
 
@@ -116,6 +124,7 @@ public class MasterControl : MonoBehaviour
         if (playerRecoveryFrame >= recoveryFrames) {
             playerRecoveryFrame = 0;
             playerState = CharacterState.Neutral;
+            playerAnimator.Play("idle");
         }
     }
 
@@ -124,6 +133,7 @@ public class MasterControl : MonoBehaviour
         if (playerSpecialFrame >= specialFrames) {
             playerSpecialFrame = 0;
             playerState = CharacterState.Neutral;
+            playerAnimator.Play("idle");
         }
     }
 
@@ -154,6 +164,7 @@ public class MasterControl : MonoBehaviour
     private void normalButtonClick(BaseEventData e) {
         if (playerState == CharacterState.Neutral) {
             playerState = CharacterState.Startup;
+            playerAnimator.Play("cr_mk_startup");
         }
     }
 
@@ -162,6 +173,7 @@ public class MasterControl : MonoBehaviour
             if (playerRecoveryFrame <= confirmWindowFrames) {
                 // Within cancel window. Opponent may have blocked.
                 playerState = CharacterState.Special;
+                playerAnimator.Play("special");
                 if (opponentState == CharacterState.HitStun) {
                     // Player performed special at the right time
                     hitConfirmCount++;
