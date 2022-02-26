@@ -18,6 +18,7 @@ public class OpponentStun : MonoBehaviour
     private const int stunRetainmentFrames = 100;
     private const float stunDecay = 1.6f;
 
+    // StunRetainmentFrame default value is high. Set it low and it will grow back high.
     public int StunRetainmentFrame = stunRetainmentFrames;
 
     // Start is called before the first frame update

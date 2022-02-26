@@ -21,11 +21,11 @@ public class MasterControl : MonoBehaviour
     private CharacterState playerState;
     private CharacterState opponentState;
 
-    private int playerStartupFrame = 0;
-    private int playerActiveFrame = 0;
-    private int playerRecoveryFrame = 0;
-    private int playerSpecialFrame = 0;
-    private int opponentRecoveryFrame = 0;
+    private int playerStartupFrame = 1;
+    private int playerActiveFrame = 1;
+    private int playerRecoveryFrame = 1;
+    private int playerSpecialFrame = 1;
+    private int opponentRecoveryFrame = 1;
     private int hitConfirmCount = 0;
     private int blockConfirmCount = 0;
 
@@ -82,8 +82,8 @@ public class MasterControl : MonoBehaviour
         playerStartupFrame += 1;
         if (playerStartupFrame >= GameConfig.startupFrames) {
             // Active frames start
-            playerStartupFrame = 0;
-            opponentStun.StunRetainmentFrame = 0;
+            playerStartupFrame = 1;
+            opponentStun.StunRetainmentFrame = 1;
             playerState = CharacterState.Active;
             playerAnimator.Play("cr_mk_active");
             if (rnd.Next(1, 100) <= GameConfig.opponentDefendPercentage) {
@@ -102,7 +102,7 @@ public class MasterControl : MonoBehaviour
     private void handleActiveFrame() {
         playerActiveFrame += 1;
         if (playerActiveFrame >= GameConfig.activeFrames) {
-            playerActiveFrame = 0;
+            playerActiveFrame = 1;
             playerState = CharacterState.Recovery;
             playerAnimator.Play("cr_mk_recovery");
         }
@@ -111,7 +111,7 @@ public class MasterControl : MonoBehaviour
     private void handleRecoveryFrame() {
         playerRecoveryFrame += 1;
         if (playerRecoveryFrame >= GameConfig.recoveryFrames) {
-            playerRecoveryFrame = 0;
+            playerRecoveryFrame = 1;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
         }
@@ -120,7 +120,7 @@ public class MasterControl : MonoBehaviour
     private void handleSpecialFrame() {
         playerSpecialFrame += 1;
         if (playerSpecialFrame >= GameConfig.specialFrames) {
-            playerSpecialFrame = 0;
+            playerSpecialFrame = 1;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
         }
@@ -129,7 +129,7 @@ public class MasterControl : MonoBehaviour
     private void handleHitStunFrame() {
         opponentRecoveryFrame += 1;
         if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
-            opponentRecoveryFrame = 0;
+            opponentRecoveryFrame = 1;
             opponentState = CharacterState.Neutral;
             Debug.Log("Opponent Recovered!");
         }
@@ -138,7 +138,7 @@ public class MasterControl : MonoBehaviour
     private void handleBlockStunFrame() {
         opponentRecoveryFrame += 1;
         if (opponentRecoveryFrame >= GameConfig.blockStunRecoveryFrames) {
-            opponentRecoveryFrame = 0;
+            opponentRecoveryFrame = 1;
             opponentState = CharacterState.Neutral;
             Debug.Log("Opponent Recovered!");
             if (playerState != CharacterState.Special) {
@@ -182,7 +182,7 @@ public class MasterControl : MonoBehaviour
         blockConfirmCount = 0;
         hitConfirmCountText.SetText(hitConfirmCount.ToString());
         blockConfirmCountText.SetText(blockConfirmCount.ToString());
-        if (playerRecoveryFrame > 0) {
+        if (playerRecoveryFrame > 1) {
             // Show the player how late they activated special
             confirmFrameText.SetText(playerRecoveryFrame.ToString());
             confirmFrameText.color = Color.red;
