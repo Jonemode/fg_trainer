@@ -11,24 +11,12 @@ public class MasterControl : MonoBehaviour
     public TMP_Text hitConfirmCountText;
     public TMP_Text blockConfirmCountText;
     public TMP_Text confirmFrameText;
-    
     public GameObject player;
-
     public OpponentStun opponentStun;
     public CounterHit counterHit;
+    public SoundSystem soundSystem;
 
     private Animator playerAnimator;
-
-    private const int startupFrames = 6;
-    private const int activeFrames = 2;
-    private const int recoveryFrames = 25;
-    private const int stunAmount = 70;
-    private const int specialFrames = 40;
-    private const int confirmWindowFrames = 16;
-    private const int hitStunRecoveryFrames = 26;
-    private const int blockStunRecoveryFrames = 24;
-
-    private const int opponentDefendPercentage = 50;
 
     private CharacterState playerState;
     private CharacterState opponentState;
@@ -92,19 +80,20 @@ public class MasterControl : MonoBehaviour
 
     private void handleStartupFrame() {
         playerStartupFrame += 1;
-        if (playerStartupFrame >= startupFrames) {
+        if (playerStartupFrame >= GameConfig.startupFrames) {
             // Active frames start
             playerStartupFrame = 0;
             opponentStun.StunRetainmentFrame = 0;
             playerState = CharacterState.Active;
             playerAnimator.Play("cr_mk_active");
-            if (rnd.Next(1, 100) <= opponentDefendPercentage) {
+            if (rnd.Next(1, 100) <= GameConfig.opponentDefendPercentage) {
                 // Opponent blocked
                 opponentState = CharacterState.BlockStun;
             } else {
                 // Opponent got hit
-                opponentStun.UpdateStunOnHit(stunAmount);
+                opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
                 counterHit.UpdateCounterHitTextOnHit();
+                soundSystem.PlayNormalAttackHit();
                 opponentState = CharacterState.HitStun;
             }
         }
@@ -112,7 +101,7 @@ public class MasterControl : MonoBehaviour
 
     private void handleActiveFrame() {
         playerActiveFrame += 1;
-        if (playerActiveFrame >= activeFrames) {
+        if (playerActiveFrame >= GameConfig.activeFrames) {
             playerActiveFrame = 0;
             playerState = CharacterState.Recovery;
             playerAnimator.Play("cr_mk_recovery");
@@ -121,7 +110,7 @@ public class MasterControl : MonoBehaviour
 
     private void handleRecoveryFrame() {
         playerRecoveryFrame += 1;
-        if (playerRecoveryFrame >= recoveryFrames) {
+        if (playerRecoveryFrame >= GameConfig.recoveryFrames) {
             playerRecoveryFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
@@ -130,7 +119,7 @@ public class MasterControl : MonoBehaviour
 
     private void handleSpecialFrame() {
         playerSpecialFrame += 1;
-        if (playerSpecialFrame >= specialFrames) {
+        if (playerSpecialFrame >= GameConfig.specialFrames) {
             playerSpecialFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
@@ -139,7 +128,7 @@ public class MasterControl : MonoBehaviour
 
     private void handleHitStunFrame() {
         opponentRecoveryFrame += 1;
-        if (opponentRecoveryFrame >= hitStunRecoveryFrames) {
+        if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
             Debug.Log("Opponent Recovered!");
@@ -148,7 +137,7 @@ public class MasterControl : MonoBehaviour
 
     private void handleBlockStunFrame() {
         opponentRecoveryFrame += 1;
-        if (opponentRecoveryFrame >= blockStunRecoveryFrames) {
+        if (opponentRecoveryFrame >= GameConfig.blockStunRecoveryFrames) {
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
             Debug.Log("Opponent Recovered!");
@@ -170,7 +159,7 @@ public class MasterControl : MonoBehaviour
 
     private void specialButtonClick(BaseEventData e) {
         if (playerState == CharacterState.Recovery) {
-            if (playerRecoveryFrame <= confirmWindowFrames) {
+            if (playerRecoveryFrame <= GameConfig.confirmWindowFrames) {
                 // Within cancel window. Opponent may have blocked.
                 playerState = CharacterState.Special;
                 playerAnimator.Play("special");
