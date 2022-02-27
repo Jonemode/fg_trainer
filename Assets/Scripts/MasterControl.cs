@@ -33,6 +33,7 @@ public class MasterControl : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
+        Time.fixedDeltaTime = 0.0167f;
         Application.targetFrameRate = 60;
 
         playerState = CharacterState.Neutral;
@@ -47,6 +48,7 @@ public class MasterControl : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate() {
+        //Debug.Log((int)(1f / Time.unscaledDeltaTime));
         switch (playerState) {
             case CharacterState.Startup:
                 handleStartupFrame();
