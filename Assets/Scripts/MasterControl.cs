@@ -46,8 +46,8 @@ public class MasterControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() {
-        switch(playerState) {
+    void FixedUpdate() {
+        switch (playerState) {
             case CharacterState.Startup:
                 handleStartupFrame();
                 break;
@@ -158,19 +158,17 @@ public class MasterControl : MonoBehaviour
     }
 
     private void specialButtonClick(BaseEventData e) {
-        if (playerState == CharacterState.Recovery) {
-            if (playerRecoveryFrame <= GameConfig.confirmWindowFrames - 1) {
-                // Within cancel window. Opponent may have blocked.
-                playerState = CharacterState.Special;
-                playerAnimator.Play("special");
-                if (opponentState == CharacterState.HitStun) {
-                    // Player performed special at the right time
-                    hitConfirmCount++;
-                    hitConfirmCountText.SetText(hitConfirmCount.ToString());
-                    updateConfirmFrameText(Color.green);
-                }
-                return;
+        if (playerState == CharacterState.Recovery && playerRecoveryFrame <= GameConfig.confirmWindowFrames - 1) {
+            // Within cancel window. Opponent may have blocked.
+            playerState = CharacterState.Special;
+            playerAnimator.Play("special");
+            if (opponentState == CharacterState.HitStun) {
+                // Player performed special at the right time
+                hitConfirmCount++;
+                hitConfirmCountText.SetText(hitConfirmCount.ToString());
+                updateConfirmFrameText(Color.green);
             }
+            return;
         }
 
         // Player either
