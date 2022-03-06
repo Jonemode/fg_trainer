@@ -12,11 +12,13 @@ public class MasterControl : MonoBehaviour
     public TMP_Text blockConfirmCountText;
     public TMP_Text confirmFrameText;
     public GameObject player;
+    public GameObject opponent;
     public OpponentStun opponentStun;
     public CounterHit counterHit;
     public SoundSystem soundSystem;
 
     private Animator playerAnimator;
+    private Animator opponentAnimator;
 
     private CharacterState playerState;
     private CharacterState opponentState;
@@ -40,6 +42,7 @@ public class MasterControl : MonoBehaviour
         opponentState = CharacterState.Neutral;
 
         playerAnimator = player.GetComponent<Animator>();
+        opponentAnimator = opponent.GetComponent<Animator>();
 
         // Setup button clicks
         createButtonBinding(normalButton, normalButtonClick);
@@ -93,6 +96,7 @@ public class MasterControl : MonoBehaviour
                 opponentState = CharacterState.BlockStun;
             } else {
                 // Opponent got hit
+                opponentAnimator.Play("hit");
                 opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
                 counterHit.UpdateCounterHitTextOnHit();
                 soundSystem.PlayNormalAttackHit();
@@ -133,6 +137,7 @@ public class MasterControl : MonoBehaviour
         if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames - 1) {
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
+            opponentAnimator.Play("idle");
             Debug.Log("Opponent Recovered!");
         }
     }
@@ -142,6 +147,7 @@ public class MasterControl : MonoBehaviour
         if (opponentRecoveryFrame >= GameConfig.blockStunRecoveryFrames - 1) {
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
+            opponentAnimator.Play("idle");
             Debug.Log("Opponent Recovered!");
             if (playerState != CharacterState.Special) {
                 // Player successfully did not activate special

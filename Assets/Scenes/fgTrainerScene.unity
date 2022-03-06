@@ -561,6 +561,7 @@ MonoBehaviour:
   blockConfirmCountText: {fileID: 291220930}
   confirmFrameText: {fileID: 410216013}
   player: {fileID: 285757011}
+  opponent: {fileID: 1614600730}
   opponentStun: {fileID: 1186488968}
   counterHit: {fileID: 975666357}
   soundSystem: {fileID: 1587030959}
@@ -2587,6 +2588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1614600731}
   - component: {fileID: 1614600732}
+  - component: {fileID: 1614600733}
   m_Layer: 0
   m_Name: Opponent
   m_TagString: Untagged
@@ -2652,8 +2654,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -984180587
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fd12ac31dae43bd478dad3d667507303, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -2666,6 +2668,26 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1614600733
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1614600730}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7e2eb97c67fcdee40b80ca4d7a2df492, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1910819961
 GameObject:
   m_ObjectHideFlags: 0

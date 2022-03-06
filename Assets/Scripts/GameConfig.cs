@@ -7,6 +7,6 @@ public static class GameConfig
     public const int specialFrames = 40;
     public const int confirmWindowFrames = 16;
     public const int hitStunRecoveryFrames = 26;
-    public const int blockStunRecoveryFrames = 24;
+    public const int blockStunRecoveryFrames = 41;
     public const int opponentDefendPercentage = 50;
 }
