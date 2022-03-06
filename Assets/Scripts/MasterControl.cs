@@ -27,9 +27,11 @@ public class MasterControl : MonoBehaviour
     private int playerActiveFrame = 0;
     private int playerRecoveryFrame = 0;
     private int playerSpecialFrame = 0;
+    private int playerSpecialActivateFrame = 0;
     private int opponentRecoveryFrame = 0;
     private int hitConfirmCount = 0;
     private int blockConfirmCount = 0;
+    private bool normalAttackHit = false;
 
     private static System.Random rnd = new System.Random();
 
@@ -98,9 +100,10 @@ public class MasterControl : MonoBehaviour
                 // Opponent got hit
                 opponentAnimator.Play("hit");
                 opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
+                opponentState = CharacterState.HitStun;
                 counterHit.UpdateCounterHitTextOnHit();
                 soundSystem.PlayNormalAttackHit();
-                opponentState = CharacterState.HitStun;
+                normalAttackHit = true;
             }
         }
     }
@@ -120,6 +123,16 @@ public class MasterControl : MonoBehaviour
             playerRecoveryFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
+            if (normalAttackHit) {
+                // Player didn't execute special and they should have
+                resetScore();
+            } else {
+                // Player successfully did not activate special
+                blockConfirmCount++;
+                blockConfirmCountText.SetText(blockConfirmCount.ToString());
+                confirmFrameText.SetText("");
+            }
+            normalAttackHit = false;
         }
     }
 
@@ -129,6 +142,17 @@ public class MasterControl : MonoBehaviour
             playerSpecialFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
+            if (normalAttackHit) {
+                // Player performed special at the right time
+                hitConfirmCount++;
+                hitConfirmCountText.SetText(hitConfirmCount.ToString());
+                updateConfirmFrameText(Color.green);
+            } else {
+                resetScore();
+                updateConfirmFrameText(Color.red);
+            }
+            normalAttackHit = false;
+            playerSpecialActivateFrame = 0;
         }
     }
 
@@ -149,12 +173,6 @@ public class MasterControl : MonoBehaviour
             opponentState = CharacterState.Neutral;
             opponentAnimator.Play("idle");
             Debug.Log("Opponent Recovered!");
-            if (playerState != CharacterState.Special) {
-                // Player successfully did not activate special
-                blockConfirmCount++;
-                blockConfirmCountText.SetText(blockConfirmCount.ToString());
-                confirmFrameText.SetText("");
-            }
         }
     }
 
@@ -166,36 +184,29 @@ public class MasterControl : MonoBehaviour
     }
 
     private void specialButtonClick(BaseEventData e) {
-        if (playerState == CharacterState.Recovery && playerRecoveryFrame <= GameConfig.confirmWindowFrames - 1) {
-            // Within cancel window. Opponent may have blocked.
+        if (playerState == CharacterState.Neutral || 
+            (playerState == CharacterState.Recovery && playerRecoveryFrame <= GameConfig.confirmWindowFrames - 1)) {
+            playerSpecialActivateFrame = playerRecoveryFrame;
+            playerRecoveryFrame = 0;
             playerState = CharacterState.Special;
             playerAnimator.Play("special");
-            if (opponentState == CharacterState.HitStun) {
-                // Player performed special at the right time
-                hitConfirmCount++;
-                hitConfirmCountText.SetText(hitConfirmCount.ToString());
-                updateConfirmFrameText(Color.green);
-            }
-            return;
+        } else {
+            resetScore();
         }
+    }
 
-        // Player either
-        // a) missed cancellable window
-        // b) pressed special at completely wrong time
-        // Not changing player state in this case
+    private void resetScore() {
         hitConfirmCount = 0;
         blockConfirmCount = 0;
         hitConfirmCountText.SetText(hitConfirmCount.ToString());
         blockConfirmCountText.SetText(blockConfirmCount.ToString());
-        // Show the player how late they activated special
-        updateConfirmFrameText(Color.red, playerRecoveryFrame == 0);
     }
 
-    private void updateConfirmFrameText(Color c, bool empty = false) {
-        if (empty) {
+    private void updateConfirmFrameText(Color c) {
+        if (playerSpecialActivateFrame == 0) {
             confirmFrameText.SetText("");
         } else {
-            confirmFrameText.SetText((playerRecoveryFrame + 1).ToString());
+            confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
             confirmFrameText.color = c;
         }
     }
