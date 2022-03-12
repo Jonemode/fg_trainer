@@ -95,6 +95,7 @@ public class MasterControl : MonoBehaviour
             playerAnimator.Play("cr_mk_active");
             if (rnd.Next(1, 100) <= GameConfig.opponentDefendPercentage) {
                 // Opponent blocked
+                opponentAnimator.Play("block");
                 opponentState = CharacterState.BlockStun;
             } else {
                 // Opponent got hit
