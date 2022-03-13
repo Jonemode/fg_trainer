@@ -16,7 +16,7 @@ public class OpponentStun : MonoBehaviour
     private const float stunBarPaddingPts = 6;
 
     private const int stunRetainmentFrames = 100;
-    private const float stunDecay = 1.6f;
+    private const float stunDecay = 2.5f;
 
     // StunRetainmentFrame default value is high, when setting low it will grow back high as frames pass
     public int StunRetainmentFrame = stunRetainmentFrames;

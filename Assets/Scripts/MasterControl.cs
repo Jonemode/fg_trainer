@@ -16,6 +16,7 @@ public class MasterControl : MonoBehaviour
     public OpponentStun opponentStun;
     public CounterHit counterHit;
     public SoundSystem soundSystem;
+    public SimDropdown simDropdown;
 
     private Animator playerAnimator;
     private Animator opponentAnimator;
@@ -51,7 +52,6 @@ public class MasterControl : MonoBehaviour
         createButtonBinding(specialButton, specialButtonClick);
     }
 
-    // Update is called once per frame
     void FixedUpdate() {
         //Debug.Log((int)(1f / Time.unscaledDeltaTime));
         switch (playerState) {
@@ -163,7 +163,6 @@ public class MasterControl : MonoBehaviour
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
             opponentAnimator.Play("idle");
-            Debug.Log("Opponent Recovered!");
         }
     }
 
@@ -173,7 +172,6 @@ public class MasterControl : MonoBehaviour
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
             opponentAnimator.Play("idle");
-            Debug.Log("Opponent Recovered!");
         }
     }
 
@@ -186,7 +184,7 @@ public class MasterControl : MonoBehaviour
 
     private void specialButtonClick(BaseEventData e) {
         if (playerState == CharacterState.Neutral || 
-            (playerState == CharacterState.Recovery && playerRecoveryFrame <= GameConfig.confirmWindowFrames - 1)) {
+            (playerState == CharacterState.Recovery && playerRecoveryFrame <= simDropdown.GetSimulatedConfirmWindow() - 1)) {
             playerSpecialActivateFrame = playerRecoveryFrame;
             playerRecoveryFrame = 0;
             playerState = CharacterState.Special;
@@ -207,7 +205,13 @@ public class MasterControl : MonoBehaviour
         if (playerSpecialActivateFrame == 0) {
             confirmFrameText.SetText("");
         } else {
-            confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
+            if (simDropdown.IsPS4Mode()) {
+                Debug.Log("in PS4 mode, display real frame");
+                confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
+            } else {
+                Debug.Log("in PC mode, display reduced (fake) frame");
+                confirmFrameText.SetText((playerSpecialActivateFrame + 1 - GameConfig.ps4FrameLag).ToString());
+            }
             confirmFrameText.color = c;
         }
     }
