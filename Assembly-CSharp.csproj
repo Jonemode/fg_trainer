@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\OpponentStun.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\Scripts\SimDropdown.cs" />
+    <Compile Include="Assets\Scripts\StatsPanel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

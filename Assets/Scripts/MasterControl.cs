@@ -8,15 +8,23 @@ public class MasterControl : MonoBehaviour
 {
     public Button normalButton;
     public Button specialButton;
-    public TMP_Text hitConfirmCountText;
-    public TMP_Text blockConfirmCountText;
-    public TMP_Text confirmFrameText;
     public GameObject player;
     public GameObject opponent;
+
+    [SerializeField]
     public OpponentStun opponentStun;
+    
+    [SerializeField]
     public CounterHit counterHit;
+    
+    [SerializeField]
     public SoundSystem soundSystem;
+    
+    [SerializeField]
     public SimDropdown simDropdown;
+    
+    [SerializeField]
+    public StatsPanel statsPanel;
 
     private Animator playerAnimator;
     private Animator opponentAnimator;
@@ -31,8 +39,6 @@ public class MasterControl : MonoBehaviour
     private int playerSpecialFrame = 0;
     private int playerSpecialActivateFrame = 0;
     private int opponentRecoveryFrame = 0;
-    private int hitConfirmCount = 0;
-    private int blockConfirmCount = 0;
     private bool normalAttackHit = false;
 
     private static System.Random rnd = new System.Random();
@@ -128,12 +134,10 @@ public class MasterControl : MonoBehaviour
             playerAnimator.Play("idle");
             if (normalAttackHit) {
                 // Player didn't execute special and they should have
-                resetScore();
+                statsPanel.ResetScore();
             } else {
                 // Player successfully did not activate special
-                blockConfirmCount++;
-                blockConfirmCountText.SetText(blockConfirmCount.ToString());
-                confirmFrameText.SetText("");
+                statsPanel.BlockConfirmCount++;
             }
             normalAttackHit = false;
         } else {
@@ -148,13 +152,11 @@ public class MasterControl : MonoBehaviour
             playerAnimator.Play("idle");
             if (normalAttackHit) {
                 // Player performed special at the right time
-                hitConfirmCount++;
-                hitConfirmCountText.SetText(hitConfirmCount.ToString());
-                updateConfirmFrameText(Color.green);
+                statsPanel.HitConfirmCount++;
             } else {
-                resetScore();
-                updateConfirmFrameText(Color.red);
+                statsPanel.ResetScore();
             }
+            statsPanel.UpdateConfirmFrameText(playerSpecialActivateFrame, normalAttackHit, simDropdown.IsPS4Mode());
             normalAttackHit = false;
             playerSpecialActivateFrame = 0;
         } else {
@@ -197,27 +199,7 @@ public class MasterControl : MonoBehaviour
             playerState = CharacterState.Special;
             playerAnimator.Play("special");
         } else {
-            resetScore();
-        }
-    }
-
-    private void resetScore() {
-        hitConfirmCount = 0;
-        blockConfirmCount = 0;
-        hitConfirmCountText.SetText(hitConfirmCount.ToString());
-        blockConfirmCountText.SetText(blockConfirmCount.ToString());
-    }
-
-    private void updateConfirmFrameText(Color c) {
-        if (playerSpecialActivateFrame == 0) {
-            confirmFrameText.SetText("");
-        } else {
-            if (simDropdown.IsPS4Mode()) {
-                confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
-            } else {
-                confirmFrameText.SetText((playerSpecialActivateFrame - GameConfig.ps4FrameLag + 1).ToString());
-            }
-            confirmFrameText.color = c;
+            statsPanel.ResetScore();
         }
     }
 
