@@ -696,15 +696,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalButton: {fileID: 1161637328}
   specialButton: {fileID: 997230525}
-  hitConfirmCountText: {fileID: 727777414}
-  blockConfirmCountText: {fileID: 291220930}
-  confirmFrameText: {fileID: 410216013}
   player: {fileID: 285757011}
   opponent: {fileID: 1614600730}
   opponentStun: {fileID: 311079898}
   counterHit: {fileID: 311079897}
   soundSystem: {fileID: 311079895}
   simDropdown: {fileID: 311079896}
+  statsPanel: {fileID: 311079899}
 --- !u!4 &311079894
 Transform:
   m_ObjectHideFlags: 0
@@ -786,9 +784,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d59c6f248986f48a6946d8097599dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitConfirmCountText: {fileID: 0}
-  blockConfirmCountText: {fileID: 0}
-  confirmFrameText: {fileID: 0}
+  hitConfirmCountText: {fileID: 727777414}
+  blockConfirmCountText: {fileID: 291220930}
+  confirmFrameText: {fileID: 410216013}
 --- !u!1 &410216011
 GameObject:
   m_ObjectHideFlags: 0
