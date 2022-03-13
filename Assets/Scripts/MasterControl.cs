@@ -24,6 +24,7 @@ public class MasterControl : MonoBehaviour
     private CharacterState playerState;
     private CharacterState opponentState;
 
+    // Internally we index from 0 for the first frame
     private int playerStartupFrame = 0;
     private int playerActiveFrame = 0;
     private int playerRecoveryFrame = 0;
@@ -86,11 +87,10 @@ public class MasterControl : MonoBehaviour
     }
 
     private void handleStartupFrame() {
-        playerStartupFrame += 1;
-        if (playerStartupFrame >= GameConfig.startupFrames - 1) {
+        if (playerStartupFrame >= GameConfig.startupFrames) {
             // Active frames start
             playerStartupFrame = 0;
-            opponentStun.StunRetainmentFrame = 1;
+            opponentStun.StunRetainmentFrame = 0;
             playerState = CharacterState.Active;
             playerAnimator.Play("cr_mk_active");
             if (rnd.Next(1, 100) <= GameConfig.opponentDefendPercentage) {
@@ -106,21 +106,23 @@ public class MasterControl : MonoBehaviour
                 soundSystem.PlayNormalAttackHit();
                 normalAttackHit = true;
             }
+        } else {
+            playerStartupFrame += 1;
         }
     }
 
     private void handleActiveFrame() {
-        playerActiveFrame += 1;
-        if (playerActiveFrame >= GameConfig.activeFrames - 1) {
+        if (playerActiveFrame >= GameConfig.activeFrames) {
             playerActiveFrame = 0;
             playerState = CharacterState.Recovery;
             playerAnimator.Play("cr_mk_recovery");
+        } else {
+            playerActiveFrame += 1;
         }
     }
 
     private void handleRecoveryFrame() {
-        playerRecoveryFrame += 1;
-        if (playerRecoveryFrame >= GameConfig.recoveryFrames - 1) {
+        if (playerRecoveryFrame >= GameConfig.recoveryFrames) {
             playerRecoveryFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
@@ -134,12 +136,13 @@ public class MasterControl : MonoBehaviour
                 confirmFrameText.SetText("");
             }
             normalAttackHit = false;
+        } else {
+            playerRecoveryFrame += 1;
         }
     }
 
     private void handleSpecialFrame() {
-        playerSpecialFrame += 1;
-        if (playerSpecialFrame >= GameConfig.specialFrames - 1) {
+        if (playerSpecialFrame >= GameConfig.specialFrames) {
             playerSpecialFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
@@ -154,24 +157,28 @@ public class MasterControl : MonoBehaviour
             }
             normalAttackHit = false;
             playerSpecialActivateFrame = 0;
+        } else {
+            playerSpecialFrame += 1;
         }
     }
 
     private void handleHitStunFrame() {
-        opponentRecoveryFrame += 1;
-        if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames - 1) {
+        if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
             opponentAnimator.Play("idle");
+        } else {
+            opponentRecoveryFrame += 1;
         }
     }
 
     private void handleBlockStunFrame() {
-        opponentRecoveryFrame += 1;
-        if (opponentRecoveryFrame >= GameConfig.blockStunRecoveryFrames - 1) {
+        if (opponentRecoveryFrame >= GameConfig.blockStunRecoveryFrames) {
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
             opponentAnimator.Play("idle");
+        } else {
+            opponentRecoveryFrame += 1;
         }
     }
 
@@ -184,7 +191,7 @@ public class MasterControl : MonoBehaviour
 
     private void specialButtonClick(BaseEventData e) {
         if (playerState == CharacterState.Neutral || 
-            (playerState == CharacterState.Recovery && playerRecoveryFrame <= simDropdown.GetSimulatedConfirmWindow() - 1)) {
+            (playerState == CharacterState.Recovery && playerRecoveryFrame <= simDropdown.GetSimulatedConfirmWindow())) {
             playerSpecialActivateFrame = playerRecoveryFrame;
             playerRecoveryFrame = 0;
             playerState = CharacterState.Special;
@@ -206,11 +213,9 @@ public class MasterControl : MonoBehaviour
             confirmFrameText.SetText("");
         } else {
             if (simDropdown.IsPS4Mode()) {
-                Debug.Log("in PS4 mode, display real frame");
                 confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
             } else {
-                Debug.Log("in PC mode, display reduced (fake) frame");
-                confirmFrameText.SetText((playerSpecialActivateFrame + 1 - GameConfig.ps4FrameLag).ToString());
+                confirmFrameText.SetText((playerSpecialActivateFrame - GameConfig.ps4FrameLag + 1).ToString());
             }
             confirmFrameText.color = c;
         }
