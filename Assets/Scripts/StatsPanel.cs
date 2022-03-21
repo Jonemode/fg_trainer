@@ -36,7 +36,7 @@ public class StatsPanel : MonoBehaviour
         BlockConfirmCount = 0;
     }
 
-    public void UpdateConfirmFrameText(int playerSpecialActivateFrame, bool normalAttackHit, bool isPS4Mode) {
+    public void UpdateConfirmFrameText(int playerSpecialActivateFrame, CharacterState opponentState, bool isPS4Mode) {
         if (playerSpecialActivateFrame == 0) {
             confirmFrameText.SetText("");
         } else {
@@ -45,7 +45,7 @@ public class StatsPanel : MonoBehaviour
             } else {
                 confirmFrameText.SetText((playerSpecialActivateFrame - GameConfig.ps4FrameLag + 1).ToString());
             }
-            if (normalAttackHit) {
+            if (opponentState == CharacterState.SpecialHitStun) {
                 confirmFrameText.color = Color.green;
             } else {
                 confirmFrameText.color = Color.red;

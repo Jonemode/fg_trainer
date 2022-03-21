@@ -4,9 +4,11 @@ public enum CharacterState
     Startup,
     Active,
     Recovery,
-    Special,
+    SpecialStartup,
+    SpecialRecovery,
     HitStun,
-    BlockStun
+    BlockStun,
+    SpecialHitStun,
 }
 
 public enum Move

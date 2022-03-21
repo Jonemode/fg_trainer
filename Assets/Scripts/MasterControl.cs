@@ -36,10 +36,11 @@ public class MasterControl : MonoBehaviour
     private int playerStartupFrame = 0;
     private int playerActiveFrame = 0;
     private int playerRecoveryFrame = 0;
-    private int playerSpecialFrame = 0;
+    private int playerSpecialStartupFrame = 0;
+    private int playerSpecialRecoveryFrame = 0;
     private int playerSpecialActivateFrame = 0;
     private int opponentRecoveryFrame = 0;
-    private bool normalAttackHit = false;
+    private int opponentSpecialRecoveryFrame = 0;
 
     private static System.Random rnd = new System.Random();
 
@@ -71,8 +72,11 @@ public class MasterControl : MonoBehaviour
             case CharacterState.Recovery:
                 handleRecoveryFrame();
                 break;
-            case CharacterState.Special:
-                handleSpecialFrame();
+            case CharacterState.SpecialStartup:
+                handleSpecialStartupFrame();
+                break;
+            case CharacterState.SpecialRecovery:
+                handleSpecialRecoveryFrame();
                 break;
             default:
                 // in neutral, do nothing
@@ -86,12 +90,16 @@ public class MasterControl : MonoBehaviour
             case CharacterState.BlockStun:
                 handleBlockStunFrame();
                 break;
+            case CharacterState.SpecialHitStun:
+                handleSpecialHitStunFrame();
+                break;
             default:
                 // in neutral, do nothing
                 break;
         }
     }
 
+    // Player is in Startup state
     private void handleStartupFrame() {
         if (playerStartupFrame >= GameConfig.startupFrames) {
             // Active frames start
@@ -110,13 +118,13 @@ public class MasterControl : MonoBehaviour
                 opponentState = CharacterState.HitStun;
                 counterHit.UpdateCounterHitTextOnHit();
                 soundSystem.PlayNormalAttackHit();
-                normalAttackHit = true;
             }
         } else {
             playerStartupFrame += 1;
         }
     }
 
+    // Player is in Active state
     private void handleActiveFrame() {
         if (playerActiveFrame >= GameConfig.activeFrames) {
             playerActiveFrame = 0;
@@ -127,53 +135,72 @@ public class MasterControl : MonoBehaviour
         }
     }
 
+    // Player is in Recovery state
     private void handleRecoveryFrame() {
         if (playerRecoveryFrame >= GameConfig.recoveryFrames) {
             playerRecoveryFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
-            if (normalAttackHit) {
-                // Player didn't execute special and they should have
-                statsPanel.ResetScore();
-            } else {
+            if (opponentState == CharacterState.BlockStun) {
                 // Player successfully did not activate special
                 statsPanel.BlockConfirmCount++;
             }
-            normalAttackHit = false;
         } else {
             playerRecoveryFrame += 1;
         }
     }
 
-    private void handleSpecialFrame() {
-        if (playerSpecialFrame >= GameConfig.specialFrames) {
-            playerSpecialFrame = 0;
+    // Player is in SpecialStartup state
+    private void handleSpecialStartupFrame() {
+       if (playerSpecialStartupFrame >= GameConfig.specialStartupFrames) {
+            playerSpecialStartupFrame = 0;
+            playerState = CharacterState.SpecialRecovery;
+            if (opponentState == CharacterState.HitStun) {
+                opponentAnimator.Play("special_hit");
+                opponentState = CharacterState.SpecialHitStun;
+            } else {
+                opponentAnimator.Play("block");
+                opponentState = CharacterState.BlockStun;
+                statsPanel.ResetScore();
+            }
+       } else {
+            playerSpecialStartupFrame += 1;
+       }
+    }
+
+    // Player is in SpecialRecovery state
+    private void handleSpecialRecoveryFrame() {
+        if (playerSpecialRecoveryFrame >= GameConfig.specialRecoveryFrames) {
+            playerSpecialRecoveryFrame = 0;
             playerState = CharacterState.Neutral;
             playerAnimator.Play("idle");
-            if (normalAttackHit) {
+            if (opponentState == CharacterState.SpecialHitStun) {
                 // Player performed special at the right time
                 statsPanel.HitConfirmCount++;
             } else {
                 statsPanel.ResetScore();
             }
-            statsPanel.UpdateConfirmFrameText(playerSpecialActivateFrame, normalAttackHit, simDropdown.IsPS4Mode());
-            normalAttackHit = false;
+            statsPanel.UpdateConfirmFrameText(playerSpecialActivateFrame, opponentState, simDropdown.IsPS4Mode());
             playerSpecialActivateFrame = 0;
         } else {
-            playerSpecialFrame += 1;
+            playerSpecialRecoveryFrame += 1;
         }
     }
 
+    // Opponent is in HitStun state
     private void handleHitStunFrame() {
         if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             opponentRecoveryFrame = 0;
             opponentState = CharacterState.Neutral;
             opponentAnimator.Play("idle");
+            // Player didn't execute special and they should have
+            statsPanel.ResetScore();
         } else {
             opponentRecoveryFrame += 1;
         }
     }
 
+    // Opponent is in BlockStun state
     private void handleBlockStunFrame() {
         if (opponentRecoveryFrame >= GameConfig.blockStunRecoveryFrames) {
             opponentRecoveryFrame = 0;
@@ -181,6 +208,17 @@ public class MasterControl : MonoBehaviour
             opponentAnimator.Play("idle");
         } else {
             opponentRecoveryFrame += 1;
+        }
+    }
+
+    // Opponent is in SpecialHitStun state
+    private void handleSpecialHitStunFrame() {
+        if (opponentSpecialRecoveryFrame >= GameConfig.specialHitStunRecoveryFrames) {
+            opponentSpecialRecoveryFrame = 0;
+            opponentState = CharacterState.Neutral;
+            opponentAnimator.Play("idle");
+        } else {
+            opponentSpecialRecoveryFrame += 1;
         }
     }
 
@@ -196,7 +234,7 @@ public class MasterControl : MonoBehaviour
             (playerState == CharacterState.Recovery && playerRecoveryFrame <= simDropdown.GetSimulatedConfirmWindow())) {
             playerSpecialActivateFrame = playerRecoveryFrame;
             playerRecoveryFrame = 0;
-            playerState = CharacterState.Special;
+            playerState = CharacterState.SpecialStartup;
             playerAnimator.Play("special");
         } else {
             statsPanel.ResetScore();
