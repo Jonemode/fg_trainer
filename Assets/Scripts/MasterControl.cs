@@ -156,9 +156,11 @@ public class MasterControl : MonoBehaviour
             playerSpecialStartupFrame = 0;
             playerState = CharacterState.SpecialRecovery;
             if (opponentState == CharacterState.HitStun) {
+                opponentRecoveryFrame = 0;
                 opponentAnimator.Play("special_hit");
                 opponentState = CharacterState.SpecialHitStun;
             } else {
+                opponentRecoveryFrame = 0;
                 opponentAnimator.Play("block");
                 opponentState = CharacterState.BlockStun;
                 statsPanel.ResetScore();

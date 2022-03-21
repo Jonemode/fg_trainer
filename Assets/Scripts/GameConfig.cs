@@ -14,6 +14,8 @@ public static class GameConfig
 
     public const int opponentDefendPercentage = 50;
     public const int ps4FrameLag = 3;
+
+    // Window after player recovery start, which you can activate special and have it connect
     public const int confirmWindowFrames = 17;
     public const int stunAmount = 70;
 }
