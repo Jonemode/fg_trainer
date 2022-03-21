@@ -113,7 +113,6 @@ public class MasterControl : MonoBehaviour
                 opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
                 changeOpponentState(CharacterState.HitStun);
                 counterHit.UpdateCounterHitTextOnHit();
-                soundSystem.PlayNormalAttackHit();
             }
         } else {
             playerStartupFrame += 1;
@@ -270,9 +269,11 @@ public class MasterControl : MonoBehaviour
                 break;
             case CharacterState.HitStun:
                 opponentAnimator.Play("hit");
+                soundSystem.PlayNormalAttackHit();
                 break;
             case CharacterState.SpecialHitStun:
                 opponentAnimator.Play("special_hit");
+                soundSystem.PlaySpecialAttackHit();
                 break;
             default:
                 break;
