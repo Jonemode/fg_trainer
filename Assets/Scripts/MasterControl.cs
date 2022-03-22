@@ -267,7 +267,8 @@ public class MasterControl : MonoBehaviour
                 opponentAnimator.Play("idle");
                 break;
             case CharacterState.BlockStun:
-                opponentAnimator.Play("block");
+                // Specify layer and normalizedTime to start the animation from the start if it's currently playing
+                opponentAnimator.Play("block", -1, 0f);
                 break;
             case CharacterState.HitStun:
                 opponentAnimator.Play("hit");
