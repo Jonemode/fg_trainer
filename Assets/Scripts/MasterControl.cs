@@ -239,6 +239,7 @@ public class MasterControl : MonoBehaviour
                 break;
             case CharacterState.Startup:
                 playerAnimator.Play("cr_mk_startup");
+                soundSystem.PlayKarinAttackVoice();
                 break;
             case CharacterState.Active:
                 playerAnimator.Play("cr_mk_active");
@@ -248,6 +249,7 @@ public class MasterControl : MonoBehaviour
                 break;
             case CharacterState.SpecialStartup:
                 playerAnimator.Play("special");
+                soundSystem.PlayKarinSpecialAttackVoice();
                 break;
             case CharacterState.SpecialRecovery:
                 break;
@@ -270,10 +272,12 @@ public class MasterControl : MonoBehaviour
             case CharacterState.HitStun:
                 opponentAnimator.Play("hit");
                 soundSystem.PlayNormalAttackHit();
+                soundSystem.PlayDanHitVoice();
                 break;
             case CharacterState.SpecialHitStun:
                 opponentAnimator.Play("special_hit");
                 soundSystem.PlaySpecialAttackHit();
+                soundSystem.PlayDanSpecialHitVoice();
                 break;
             default:
                 break;
