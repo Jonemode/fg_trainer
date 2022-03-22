@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class OpponentStun : MonoBehaviour
 {
+    [SerializeField]
     public GameObject stunBar;
+
+    [SerializeField]
     public GameObject stunBarBackground;
 
     private RectTransform stunBarRT;

@@ -3,13 +3,23 @@ using UnityEngine;
 public class SoundSystem : MonoBehaviour
 {
     // Attack sounds
+    [SerializeField]
     public AudioSource normalAttackHit;
+
+    [SerializeField]
     public AudioSource specialAttackHit;
 
     // Voices
+    [SerializeField]
     public AudioSource danHitVoice;
+
+    [SerializeField]
     public AudioSource danHitSpecialVoice;
+
+    [SerializeField]
     public AudioSource karinAttackVoice;
+
+    [SerializeField]
     public AudioSource karinSpecialAttackVoice;
 
     public void PlayNormalAttackHit() {

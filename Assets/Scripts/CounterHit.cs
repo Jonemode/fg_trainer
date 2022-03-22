@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class CounterHit : MonoBehaviour
 {
+    [SerializeField]
     public TMP_Text counterHitText;
 
     private const int counterHitPercentage = 50;

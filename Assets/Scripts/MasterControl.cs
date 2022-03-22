@@ -6,9 +6,16 @@ using UnityEngine.EventSystems;
 
 public class MasterControl : MonoBehaviour
 {
+    [SerializeField]
     public Button normalButton;
+
+    [SerializeField]
     public Button specialButton;
+
+    [SerializeField]
     public GameObject player;
+
+    [SerializeField]
     public GameObject opponent;
 
     [SerializeField]
@@ -26,8 +33,11 @@ public class MasterControl : MonoBehaviour
     [SerializeField]
     public StatsPanel statsPanel;
 
-    private Animator playerAnimator;
-    private Animator opponentAnimator;
+    [SerializeField]
+    public Animator playerAnimator;
+
+    [SerializeField]
+    public Animator opponentAnimator;
 
     private CharacterState playerState;
     private CharacterState opponentState;
@@ -46,14 +56,11 @@ public class MasterControl : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        Time.fixedDeltaTime = 0.0167f;
-        Application.targetFrameRate = 60;
+        Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
+        Application.targetFrameRate = GameConfig.baseFrameRate;
 
         playerState = CharacterState.Neutral;
         opponentState = CharacterState.Neutral;
-
-        playerAnimator = player.GetComponent<Animator>();
-        opponentAnimator = opponent.GetComponent<Animator>();
 
         // Setup button clicks
         createButtonBinding(normalButton, normalButtonClick);

@@ -3,8 +3,13 @@ using UnityEngine;
 
 public class StatsPanel : MonoBehaviour
 {
+    [SerializeField]
     public TMP_Text hitConfirmCountText;
+
+    [SerializeField]
     public TMP_Text blockConfirmCountText;
+
+    [SerializeField]
     public TMP_Text confirmFrameText;
 
     private int hitConfirmCount = 0;

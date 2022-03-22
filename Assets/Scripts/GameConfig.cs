@@ -1,5 +1,8 @@
 public static class GameConfig
 {
+    public const float baseFixedDeltaTime = 0.0167f;
+    public const int baseFrameRate = 60;
+
     // Player frames
     public const int startupFrames = 6;
     public const int activeFrames = 2;

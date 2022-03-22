@@ -703,6 +703,8 @@ MonoBehaviour:
   soundSystem: {fileID: 311079895}
   simDropdown: {fileID: 311079896}
   statsPanel: {fileID: 311079899}
+  playerAnimator: {fileID: 285757014}
+  opponentAnimator: {fileID: 1614600733}
 --- !u!4 &311079894
 Transform:
   m_ObjectHideFlags: 0
@@ -749,6 +751,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   simDropdown: {fileID: 191543193}
+  playerAnimator: {fileID: 285757014}
+  opponentAnimator: {fileID: 1614600733}
 --- !u!114 &311079897
 MonoBehaviour:
   m_ObjectHideFlags: 0
