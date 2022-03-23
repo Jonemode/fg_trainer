@@ -180,7 +180,7 @@ public class MasterControl : MonoBehaviour
 
     // Opponent is in HitStun state
     private void handleHitStunFrame() {
-        if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
+        if (opponentRecoveryFrame >= simDropdown.GetSimulatedHitStunRecoveryFrames()) {
             changeOpponentState(CharacterState.Neutral);
             // Player didn't execute special and they should have
             statsPanel.ResetScore();
@@ -208,13 +208,13 @@ public class MasterControl : MonoBehaviour
     }
 
     private void normalButtonClick(BaseEventData e) {
-        if (playerState == CharacterState.Neutral) {
+        if (playerState == CharacterState.Neutral && opponentState == CharacterState.Neutral) {
             changePlayerState(CharacterState.Startup);
         }
     }
 
     private void specialButtonClick(BaseEventData e) {
-        if (playerState == CharacterState.Neutral || 
+        if (playerState == CharacterState.Neutral ||
             (playerState == CharacterState.Recovery && playerRecoveryFrame <= simDropdown.GetSimulatedConfirmWindow())) {
             playerSpecialActivateFrame = playerRecoveryFrame;
             changePlayerState(CharacterState.SpecialStartup);

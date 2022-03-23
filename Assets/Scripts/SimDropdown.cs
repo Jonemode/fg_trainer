@@ -35,6 +35,15 @@ public class SimDropdown : MonoBehaviour
         return GameConfig.confirmWindowFrames;
     }
 
+    public int GetSimulatedHitStunRecoveryFrames() {
+        if (simDropdown.value == 1) {
+            // PC is more lenient, give extra hit stun frames
+            return GameConfig.hitStunRecoveryFrames + GameConfig.ps4FrameLag;
+        }
+        // PS4
+        return GameConfig.hitStunRecoveryFrames;
+    }
+
     public bool IsPS4Mode () {
         return simDropdown.value == 0;
     }

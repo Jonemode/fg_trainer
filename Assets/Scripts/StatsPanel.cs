@@ -45,11 +45,13 @@ public class StatsPanel : MonoBehaviour
         if (playerSpecialActivateFrame == 0) {
             confirmFrameText.SetText("");
         } else {
+            // Frame
             if (isPS4Mode) {
                 confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
             } else {
                 confirmFrameText.SetText((playerSpecialActivateFrame - GameConfig.ps4FrameLag + 1).ToString());
             }
+            // Color
             if (opponentState == CharacterState.SpecialHitStun) {
                 confirmFrameText.color = Color.green;
             } else {
