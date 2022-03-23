@@ -54,7 +54,12 @@ public class OpponentStun : MonoBehaviour
         }
     }
 
+    public void UpdateStunOnBlock() {
+        StunRetainmentFrame = 0;
+    }
+
     public void UpdateStunOnHit(int stunAmount) {
+        StunRetainmentFrame = 0;
         currentStun += stunAmount;
         if (currentStun > maxStun) {
             currentStun = maxStun;

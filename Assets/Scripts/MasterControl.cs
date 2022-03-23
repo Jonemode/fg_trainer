@@ -110,14 +110,12 @@ public class MasterControl : MonoBehaviour
     private void handleStartupFrame() {
         if (playerStartupFrame >= GameConfig.startupFrames) {
             // Active frames start
-            opponentStun.StunRetainmentFrame = 0;
             changePlayerState(CharacterState.Active);
             if (rnd.Next(1, 100) <= GameConfig.opponentDefendPercentage) {
                 // Opponent blocked
                 changeOpponentState(CharacterState.BlockStun);
             } else {
                 // Opponent got hit
-                opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
                 changeOpponentState(CharacterState.HitStun);
                 counterHit.UpdateCounterHitTextOnHit();
             }
@@ -275,14 +273,17 @@ public class MasterControl : MonoBehaviour
                 break;
             case CharacterState.BlockStun:
                 // Specify layer and normalizedTime to start the animation from the start if it's currently playing
+                opponentStun.UpdateStunOnBlock();
                 opponentAnimator.Play("block", -1, 0f);
                 break;
             case CharacterState.HitStun:
+                opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
                 opponentAnimator.Play("hit");
                 soundSystem.PlayNormalAttackHit();
                 soundSystem.PlayDanHitVoice();
                 break;
             case CharacterState.SpecialHitStun:
+                opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
                 opponentAnimator.Play("special_hit");
                 soundSystem.PlaySpecialAttackHit();
                 soundSystem.PlayDanSpecialHitVoice();
