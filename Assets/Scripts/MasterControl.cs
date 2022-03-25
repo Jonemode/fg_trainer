@@ -51,6 +51,7 @@ public class MasterControl : MonoBehaviour
     private int playerSpecialActivateFrame = 0;
     private int opponentRecoveryFrame = 0;
     private int opponentSpecialRecoveryFrame = 0;
+    private int opponentWakeUpFrame = 0;
 
     private static System.Random rnd = new System.Random();
 
@@ -99,6 +100,9 @@ public class MasterControl : MonoBehaviour
                 break;
             case CharacterState.SpecialHitStun:
                 handleSpecialHitStunFrame();
+                break;
+            case CharacterState.WakeUp:
+                handleWakeUpFrame();
                 break;
             default:
                 // in neutral, do nothing
@@ -201,9 +205,18 @@ public class MasterControl : MonoBehaviour
     // Opponent is in SpecialHitStun state
     private void handleSpecialHitStunFrame() {
         if (opponentSpecialRecoveryFrame >= GameConfig.specialHitStunRecoveryFrames) {
-            changeOpponentState(CharacterState.Neutral);
+            changeOpponentState(CharacterState.WakeUp);
         } else {
             opponentSpecialRecoveryFrame += 1;
+        }
+    }
+
+    // Opponent is in WakeUp state
+    private void handleWakeUpFrame() {
+        if (opponentWakeUpFrame >= GameConfig.wakeUpFrames) {
+            changeOpponentState(CharacterState.Neutral);
+        } else {
+            opponentWakeUpFrame += 1;
         }
     }
 
@@ -266,6 +279,7 @@ public class MasterControl : MonoBehaviour
     private void changeOpponentState(CharacterState newState) {
         opponentRecoveryFrame = 0;
         opponentSpecialRecoveryFrame = 0;
+        opponentWakeUpFrame = 0;
         opponentState = newState;
         switch (newState) {
             case CharacterState.Neutral:
@@ -287,6 +301,9 @@ public class MasterControl : MonoBehaviour
                 opponentAnimator.Play("special_hit");
                 soundSystem.PlaySpecialAttackHit();
                 soundSystem.PlayDanSpecialHitVoice();
+                break;
+            case CharacterState.WakeUp:
+                opponentAnimator.Play("wake_up");
                 break;
             default:
                 break;
