@@ -1,5 +1,4 @@
 using System;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -20,16 +19,16 @@ public class MasterControl : MonoBehaviour
 
     [SerializeField]
     public OpponentStun opponentStun;
-    
+
     [SerializeField]
     public CounterHit counterHit;
-    
+
     [SerializeField]
     public SoundSystem soundSystem;
-    
+
     [SerializeField]
     public SimDropdown simDropdown;
-    
+
     [SerializeField]
     public StatsPanel statsPanel;
 

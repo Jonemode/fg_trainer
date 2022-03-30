@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OpponentStun : MonoBehaviour
 {
@@ -6,7 +7,10 @@ public class OpponentStun : MonoBehaviour
     public GameObject stunBar;
 
     [SerializeField]
-    public GameObject stunBarBackground;
+    public GameObject stunBarContainer;
+
+    [SerializeField]
+    public Toggle stunBarToggle;
 
     private RectTransform stunBarRT;
 
@@ -32,10 +36,14 @@ public class OpponentStun : MonoBehaviour
         // Set the left offset (padding)
         stunBarRT.offsetMin = new Vector2(stunBarPaddingPts, stunBarRT.offsetMin.y);
 
-        RectTransform stunBarBackgroundRT = stunBarBackground.GetComponent<RectTransform>();
+        RectTransform stunBarBackgroundRT = stunBarContainer.GetComponent<RectTransform>();
         stunBarMaxPts = stunBarBackgroundRT.rect.width - (2 * stunBarPaddingPts);
 
         redrawStunBar();
+
+        stunBarToggle.onValueChanged.AddListener((isVisible) => {
+            stunBarContainer.SetActive(isVisible);
+        });
     }
 
     // Update is called once per frame
