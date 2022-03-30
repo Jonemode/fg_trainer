@@ -26,24 +26,6 @@ public class SimDropdown : MonoBehaviour
         simDropdown.onValueChanged.AddListener(OnDropdownChange);
     }
 
-    public int GetSimulatedConfirmWindow() {
-        if (simDropdown.value == 1) {
-            // PC is more lenient, add extra frames to confirm with
-            return GameConfig.confirmWindowFrames + GameConfig.ps4FrameLag;
-        }
-        // PS4
-        return GameConfig.confirmWindowFrames;
-    }
-
-    public int GetSimulatedHitStunRecoveryFrames() {
-        if (simDropdown.value == 1) {
-            // PC is more lenient, give extra hit stun frames
-            return GameConfig.hitStunRecoveryFrames + GameConfig.ps4FrameLag;
-        }
-        // PS4
-        return GameConfig.hitStunRecoveryFrames;
-    }
-
     public bool IsPS4Mode () {
         return simDropdown.value == 0;
     }

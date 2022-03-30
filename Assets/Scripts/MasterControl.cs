@@ -53,6 +53,11 @@ public class MasterControl : MonoBehaviour
     private int opponentSpecialRecoveryFrame = 0;
     private int opponentWakeUpFrame = 0;
 
+    // These handle-in-frame variables are set high and tick towards -1.
+    // At 0 they activate the action, and then tick to -1 until the user presses the button again.
+    private int handleNormalButtonClickInFrame = -1;
+    private int handleSpecialButtonClickInFrame = -1;
+
     private static System.Random rnd = new System.Random();
 
     // Start is called before the first frame update
@@ -64,12 +69,28 @@ public class MasterControl : MonoBehaviour
         opponentState = CharacterState.Neutral;
 
         // Setup button clicks
-        createButtonBinding(normalButton, normalButtonClick);
-        createButtonBinding(specialButton, specialButtonClick);
+        createButtonBinding(normalButton, normalButtonClickTrigger);
+        createButtonBinding(specialButton, specialButtonClickTrigger);
     }
 
     void FixedUpdate() {
         //Debug.Log((int)(1f / Time.unscaledDeltaTime));
+
+        // Process button presses
+        if (handleNormalButtonClickInFrame == 0) {
+            normalButtonClickAction();
+        }
+        if (handleSpecialButtonClickInFrame == 0) {
+            specialButtonClickAction();
+        }
+        if (handleNormalButtonClickInFrame >= 0) {
+            handleNormalButtonClickInFrame -= 1;
+        }
+        if (handleSpecialButtonClickInFrame >= 0) {
+            handleSpecialButtonClickInFrame -= 1;
+        }
+
+        // Process player state
         switch (playerState) {
             case CharacterState.Startup:
                 handleStartupFrame();
@@ -91,6 +112,7 @@ public class MasterControl : MonoBehaviour
                 break;
         }
 
+        // Process opponent state
         switch(opponentState) {
             case CharacterState.HitStun:
                 handleHitStunFrame();
@@ -184,7 +206,7 @@ public class MasterControl : MonoBehaviour
 
     // Opponent is in HitStun state
     private void handleHitStunFrame() {
-        if (opponentRecoveryFrame >= simDropdown.GetSimulatedHitStunRecoveryFrames()) {
+        if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             changeOpponentState(CharacterState.Neutral);
             // Player didn't execute special and they should have
             statsPanel.ResetScore();
@@ -220,15 +242,35 @@ public class MasterControl : MonoBehaviour
         }
     }
 
-    private void normalButtonClick(BaseEventData e) {
+    private void normalButtonClickTrigger(BaseEventData e) {
+        if (handleNormalButtonClickInFrame == -1) {
+            if (simDropdown.IsPS4Mode()) {
+                handleNormalButtonClickInFrame = GameConfig.ps4FrameLag;
+            } else {
+                handleNormalButtonClickInFrame = 0;
+            }
+        }
+    }
+
+    private void normalButtonClickAction() {
         if (playerState == CharacterState.Neutral && opponentState == CharacterState.Neutral) {
             changePlayerState(CharacterState.Startup);
         }
     }
 
-    private void specialButtonClick(BaseEventData e) {
+    private void specialButtonClickTrigger(BaseEventData e) {
+        if (handleSpecialButtonClickInFrame == -1) {
+            if (simDropdown.IsPS4Mode()) {
+                handleSpecialButtonClickInFrame = GameConfig.ps4FrameLag;
+            } else {
+                handleSpecialButtonClickInFrame = 0;
+            }
+        }
+    }
+
+    private void specialButtonClickAction() {
         if (playerState == CharacterState.Neutral ||
-            (playerState == CharacterState.Recovery && playerRecoveryFrame <= simDropdown.GetSimulatedConfirmWindow())) {
+            (playerState == CharacterState.Recovery && playerRecoveryFrame <= GameConfig.confirmWindowFrames)) {
             playerSpecialActivateFrame = playerRecoveryFrame;
             changePlayerState(CharacterState.SpecialStartup);
         } else {
