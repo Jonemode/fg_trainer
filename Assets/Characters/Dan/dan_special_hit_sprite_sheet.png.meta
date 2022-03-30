@@ -66,10 +66,10 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -1842,7 +1842,7 @@ TextureImporter:
       dan_special_hit_sprite_sheet_65: 235716341
       dan_special_hit_sprite_sheet_22: -1162523158
       dan_special_hit_sprite_sheet_66: 731916507
-      dan_special_hit_sprite_sheet_80: -1731585392
+      dan_special_hit_sprite_sheet_77: 1074807898
       dan_special_hit_sprite_sheet_49: -1939121493
       dan_special_hit_sprite_sheet_70: 1617848860
       dan_special_hit_sprite_sheet_5: 711745542
@@ -1912,14 +1912,14 @@ TextureImporter:
       dan_special_hit_sprite_sheet_26: -351573291
       dan_special_hit_sprite_sheet_75: 1411376065
       dan_special_hit_sprite_sheet_30: 1174767505
+      dan_special_hit_sprite_sheet_54: -75383494
       dan_special_hit_sprite_sheet_53: 1538507645
       dan_special_hit_sprite_sheet_32: 1485335169
-      dan_special_hit_sprite_sheet_62: -1102052808
+      dan_special_hit_sprite_sheet_80: -1731585392
       dan_special_hit_sprite_sheet_40: -291684865
       dan_special_hit_sprite_sheet_13: 1571815144
       dan_special_hit_sprite_sheet_69: 1877072562
-      dan_special_hit_sprite_sheet_54: -75383494
-      dan_special_hit_sprite_sheet_77: 1074807898
+      dan_special_hit_sprite_sheet_62: -1102052808
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
