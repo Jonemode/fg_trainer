@@ -196,7 +196,7 @@ public class MasterControl : MonoBehaviour
             } else {
                 statsPanel.ResetScore();
             }
-            statsPanel.UpdateConfirmFrameText(playerSpecialActivateFrame, opponentState, simDropdown.IsPS4Mode());
+            statsPanel.UpdateConfirmFrameText(playerSpecialActivateFrame, opponentState);
             playerSpecialActivateFrame = 0;
         } else {
             playerSpecialRecoveryFrame += 1;
