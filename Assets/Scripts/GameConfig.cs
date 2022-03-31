@@ -8,12 +8,12 @@ public static class GameConfig
     public const int activeFrames = 2;
     public const int recoveryFrames = 25;
     public const int specialStartupFrames = 6;
-    public const int specialRecoveryFrames = 40;
+    public const int specialRecoveryFrames = 34;
 
     // Opponent frames
-    public const int hitStunRecoveryFrames = 26;
-    public const int blockStunRecoveryFrames = 41;
-    public const int specialHitStunRecoveryFrames = 90;
+    public const int hitStunRecoveryFrames = 41;
+    public const int blockStunRecoveryFrames = 23;
+    public const int specialHitStunRecoveryFrames = 99;
     public const int wakeUpFrames = 51;
 
     public const int opponentDefendPercentage = 50;
