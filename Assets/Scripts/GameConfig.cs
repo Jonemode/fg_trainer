@@ -9,6 +9,7 @@ public static class GameConfig
     public const int recoveryFrames = 25;
     public const int specialStartupFrames = 6;
     public const int specialRecoveryFrames = 34;
+    public const int crouchFrames = 7;
 
     // Opponent frames
     public const int hitStunRecoveryFrames = 41;

@@ -48,6 +48,7 @@ public class MasterControl : MonoBehaviour
     private int playerSpecialStartupFrame = 0;
     private int playerSpecialRecoveryFrame = 0;
     private int playerSpecialActivateFrame = 0;
+    private int playerCrouchFrame = 0;
     private int opponentRecoveryFrame = 0;
     private int opponentSpecialRecoveryFrame = 0;
     private int opponentWakeUpFrame = 0;
@@ -106,6 +107,9 @@ public class MasterControl : MonoBehaviour
             case CharacterState.SpecialRecovery:
                 handleSpecialRecoveryFrame();
                 break;
+            case CharacterState.Crouch:
+                handleCrouchFrame();
+                break;
             default:
                 // in neutral, do nothing
                 break;
@@ -128,6 +132,16 @@ public class MasterControl : MonoBehaviour
             default:
                 // in neutral, do nothing
                 break;
+        }
+    }
+
+    // Player is in Crouch state
+    private void handleCrouchFrame() {
+        if (playerCrouchFrame >= GameConfig.crouchFrames) {
+            // Startup frames begin
+            changePlayerState(CharacterState.Startup);
+        } else {
+            playerCrouchFrame += 1;
         }
     }
 
@@ -253,7 +267,7 @@ public class MasterControl : MonoBehaviour
 
     private void normalButtonClickAction() {
         if (playerState == CharacterState.Neutral && opponentState == CharacterState.Neutral) {
-            changePlayerState(CharacterState.Startup);
+            changePlayerState(CharacterState.Crouch);
         }
     }
 
@@ -291,6 +305,7 @@ public class MasterControl : MonoBehaviour
         playerRecoveryFrame = 0;
         playerSpecialStartupFrame = 0;
         playerSpecialRecoveryFrame = 0;
+        playerCrouchFrame = 0;
         playerState = newState;
         switch (newState) {
             case CharacterState.Neutral:
@@ -311,6 +326,9 @@ public class MasterControl : MonoBehaviour
                 soundSystem.PlayKarinSpecialAttackVoice();
                 break;
             case CharacterState.SpecialRecovery:
+                break;
+            case CharacterState.Crouch:
+                playerAnimator.Play("crouch");
                 break;
             default:
                 break;

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a95185fa442f3ef45a9c32ce10189487
+guid: 09c7a4c4ef84afc4eb7e670d8881dd09
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -49,7 +49,7 @@ TextureImporter:
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 1
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 0
+  spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
@@ -128,7 +128,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Karin_special_startup_sprite_sheet_0
+      name: karin_crouch_sprite_sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -142,14 +142,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f288a7555d885640a8942b4822ec4df
-      internalID: 2118654481
+      spriteID: 778c472e4c28d1e42b33604273a14ad1
+      internalID: 2088467658
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Karin_special_startup_sprite_sheet_1
+      name: karin_crouch_sprite_sheet_1
       rect:
         serializedVersion: 2
         x: 400
@@ -163,14 +163,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d31cce72a814e6643aadc80ee1c50082
-      internalID: -1145965094
+      spriteID: 1c67d892708048742bb36e1d94f59b85
+      internalID: 1353735929
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Karin_special_startup_sprite_sheet_2
+      name: karin_crouch_sprite_sheet_2
       rect:
         serializedVersion: 2
         x: 800
@@ -184,14 +184,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ec8de63cf912bf4cb355834fd02f6d6
-      internalID: -944562952
+      spriteID: e136c99ff2d49e54b89e4b65f43d09fc
+      internalID: -360819895
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Karin_special_startup_sprite_sheet_3
+      name: karin_crouch_sprite_sheet_3
       rect:
         serializedVersion: 2
         x: 0
@@ -205,14 +205,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 041fbc688cad6094fbb698ed8af5db82
-      internalID: -1118800317
+      spriteID: 0b7de9c0d0146b246bc5bf290c84a6dd
+      internalID: 1324886115
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Karin_special_startup_sprite_sheet_4
+      name: karin_crouch_sprite_sheet_4
       rect:
         serializedVersion: 2
         x: 400
@@ -226,14 +226,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8de84f3769b29524991e8290a4c309fa
-      internalID: 652095241
+      spriteID: 341ec2a009d026745a8631f0ad15ea4a
+      internalID: 1911736716
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Karin_special_startup_sprite_sheet_5
+      name: karin_crouch_sprite_sheet_5
       rect:
         serializedVersion: 2
         x: 800
@@ -247,17 +247,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c70bfd21f5d914a4ca95a38e261515f0
-      internalID: -37431299
+      spriteID: e8b37a304489d33429a780e38cc4cc2e
+      internalID: 52616624
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Karin_special_startup_sprite_sheet_6
+      name: karin_crouch_sprite_sheet_6
       rect:
         serializedVersion: 2
-        x: 800
+        x: 0
         y: 0
         width: 400
         height: 400
@@ -268,8 +268,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1de55b1c685cd3d43b01c31468a04c82
-      internalID: 1572306554
+      spriteID: 93964d25fbddb044f87125c30b2fbb1c
+      internalID: -1055590711
       vertices: []
       indices: 
       edges: []
@@ -277,7 +277,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: fb42303c891994e49ac19f769e796474
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -285,13 +285,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Karin_special_startup_sprite_sheet_2: -944562952
-      Karin_special_startup_sprite_sheet_3: -1118800317
-      Karin_special_startup_sprite_sheet_0: 2118654481
-      Karin_special_startup_sprite_sheet_6: 1572306554
-      Karin_special_startup_sprite_sheet_1: -1145965094
-      Karin_special_startup_sprite_sheet_5: -37431299
-      Karin_special_startup_sprite_sheet_4: 652095241
+      karin_crouch_sprite_sheet_5: 52616624
+      karin_crouch_sprite_sheet_0: 2088467658
+      karin_crouch_sprite_sheet_6: -1055590711
+      karin_crouch_sprite_sheet_1: 1353735929
+      karin_crouch_sprite_sheet_3: 1324886115
+      karin_crouch_sprite_sheet_2: -360819895
+      karin_crouch_sprite_sheet_4: 1911736716
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

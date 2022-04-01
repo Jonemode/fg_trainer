@@ -9,7 +9,8 @@ public enum CharacterState
     HitStun,
     BlockStun,
     SpecialHitStun,
-    WakeUp
+    WakeUp,
+    Crouch
 }
 
 public enum Move
