@@ -6,7 +6,7 @@ public static class GameConfig
     // Player frames
     public const int startupFrames = 6;
     public const int activeFrames = 2;
-    public const int recoveryFrames = 25;
+    public const int recoveryFrames = 31;
     public const int specialStartupFrames = 6;
     public const int specialRecoveryFrames = 34;
     public const int crouchFrames = 7;

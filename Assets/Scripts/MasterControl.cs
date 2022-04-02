@@ -71,6 +71,10 @@ public class MasterControl : MonoBehaviour
         // Setup button clicks
         createButtonBinding(normalButton, normalButtonClickTrigger);
         createButtonBinding(specialButton, specialButtonClickTrigger);
+
+        // Setup initial character state
+        changePlayerState(CharacterState.Neutral);
+        changeOpponentState(CharacterState.Neutral);
     }
 
     void FixedUpdate() {
@@ -312,14 +316,12 @@ public class MasterControl : MonoBehaviour
                 playerAnimator.Play("idle");
                 break;
             case CharacterState.Startup:
-                playerAnimator.Play("cr_mk_startup");
+                playerAnimator.Play("cr_mk");
                 soundSystem.PlayKarinAttackVoice();
                 break;
             case CharacterState.Active:
-                playerAnimator.Play("cr_mk_active");
                 break;
             case CharacterState.Recovery:
-                playerAnimator.Play("cr_mk_recovery");
                 break;
             case CharacterState.SpecialStartup:
                 playerAnimator.Play("special");
