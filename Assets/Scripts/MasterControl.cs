@@ -180,10 +180,6 @@ public class MasterControl : MonoBehaviour
     private void handleRecoveryFrame() {
         if (playerRecoveryFrame >= GameConfig.recoveryFrames) {
             changePlayerState(CharacterState.Neutral);
-            if (opponentState == CharacterState.BlockStun) {
-                // Player successfully did not activate special
-                statsPanel.BlockConfirmCount++;
-            }
         } else {
             playerRecoveryFrame += 1;
         }
@@ -236,6 +232,10 @@ public class MasterControl : MonoBehaviour
     private void handleBlockStunFrame() {
         if (opponentRecoveryFrame >= GameConfig.blockStunRecoveryFrames) {
             changeOpponentState(CharacterState.Neutral);
+            if (playerState == CharacterState.Recovery) {
+                // Player successfully did not activate special
+                statsPanel.BlockConfirmCount++;
+            }
         } else {
             opponentRecoveryFrame += 1;
         }
@@ -287,7 +287,7 @@ public class MasterControl : MonoBehaviour
 
     private void specialButtonClickAction() {
         if (playerState == CharacterState.Neutral ||
-            (playerState == CharacterState.Recovery && playerRecoveryFrame <= GameConfig.confirmWindowFrames)) {
+            (playerState == CharacterState.Recovery && playerRecoveryFrame < GameConfig.confirmWindowFrames)) {
             playerSpecialActivateFrame = playerRecoveryFrame;
             changePlayerState(CharacterState.SpecialStartup);
         } else {
