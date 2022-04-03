@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -132,7 +132,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 800
+        y: 1600
         width: 400
         height: 400
       alignment: 0
@@ -142,8 +142,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 516bc1dbf79174d49ba7e88974d83b04
-      internalID: 515571748
+      spriteID: b5705a221d7800d41aaa0a7d20becdf9
+      internalID: -357622167
       vertices: []
       indices: 
       edges: []
@@ -153,7 +153,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 400
-        y: 800
+        y: 1600
         width: 400
         height: 400
       alignment: 0
@@ -163,8 +163,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 18fb1b68e7e7cb34d863dcb6bac8ea33
-      internalID: 659972025
+      spriteID: df1e40a68c3d3054ab366740a823effd
+      internalID: 346380849
       vertices: []
       indices: 
       edges: []
@@ -174,7 +174,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 800
-        y: 800
+        y: 1600
         width: 400
         height: 400
       alignment: 0
@@ -184,8 +184,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fe91ce1c87d21a94e89b98ae851160e4
-      internalID: -466315515
+      spriteID: 0739c0fae66c0b6458c7969888f4d491
+      internalID: 107334639
       vertices: []
       indices: 
       edges: []
@@ -195,7 +195,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1200
-        y: 800
+        y: 1600
         width: 400
         height: 400
       alignment: 0
@@ -205,8 +205,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f17ff2f25e3e5ae49a3ea69986099d43
-      internalID: 489650947
+      spriteID: d43d3883a1ddbfa418bad27af7be05ba
+      internalID: 1459711649
       vertices: []
       indices: 
       edges: []
@@ -216,7 +216,7 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1600
-        y: 800
+        y: 1600
         width: 400
         height: 400
       alignment: 0
@@ -226,8 +226,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b742adad4db69b34eb1347c1c87e7092
-      internalID: -1253483759
+      spriteID: 4607f6a0e24944d41967f355b4884094
+      internalID: 1037345740
       vertices: []
       indices: 
       edges: []
@@ -236,8 +236,8 @@ TextureImporter:
       name: dan_wake_up_sprite_sheet_5
       rect:
         serializedVersion: 2
-        x: 2000
-        y: 800
+        x: 0
+        y: 1200
         width: 400
         height: 400
       alignment: 0
@@ -247,8 +247,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f2814f6f0115f104fb3a99a160b50879
-      internalID: 1258685518
+      spriteID: 3b278790e5050b34d9ab752fd2287ae9
+      internalID: -1786708955
       vertices: []
       indices: 
       edges: []
@@ -257,8 +257,8 @@ TextureImporter:
       name: dan_wake_up_sprite_sheet_6
       rect:
         serializedVersion: 2
-        x: 2400
-        y: 800
+        x: 400
+        y: 1200
         width: 400
         height: 400
       alignment: 0
@@ -268,8 +268,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 060320b1e4b77f844a781d5e8be17922
-      internalID: 522720626
+      spriteID: e3d2771d84d6e744586e445db7b346f1
+      internalID: 630296076
       vertices: []
       indices: 
       edges: []
@@ -278,8 +278,8 @@ TextureImporter:
       name: dan_wake_up_sprite_sheet_7
       rect:
         serializedVersion: 2
-        x: 2800
-        y: 800
+        x: 800
+        y: 1200
         width: 400
         height: 400
       alignment: 0
@@ -289,8 +289,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 442adc00070c80345aa69a3be56d9e3f
-      internalID: 832228739
+      spriteID: d0684ccd9985ba34a95119b8671462db
+      internalID: 446991892
       vertices: []
       indices: 
       edges: []
@@ -299,7 +299,49 @@ TextureImporter:
       name: dan_wake_up_sprite_sheet_8
       rect:
         serializedVersion: 2
-        x: 3200
+        x: 1200
+        y: 1200
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0661c8e57c42acd42b7f8bea1f5d5865
+      internalID: 1596904772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_9
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 1200
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a670fb5ffedd004e87bdce9b2f7edd6
+      internalID: -1929508521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 800
         width: 400
         height: 400
@@ -310,50 +352,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 69fa183dc9a65df4da770b8505bb9606
-      internalID: 968330651
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_9
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 400
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c6c5cde4c58fa92449912e38f6b9f0f8
-      internalID: 1685089995
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_10
-      rect:
-        serializedVersion: 2
-        x: 400
-        y: 400
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c139d31516b642e4e84031e86d261b59
-      internalID: 2057832749
+      spriteID: 8bdac88509c097c4a8bcce6360583218
+      internalID: -1348126916
       vertices: []
       indices: 
       edges: []
@@ -362,6 +362,132 @@ TextureImporter:
       name: dan_wake_up_sprite_sheet_11
       rect:
         serializedVersion: 2
+        x: 400
+        y: 800
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa32805f33bb99a4daad55948ec4da36
+      internalID: -2130055080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_12
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 800
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70e2618dbeff5414ca056e0c15cd35dd
+      internalID: 1457005181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_13
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 800
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85017a134e3e9b34487c4b461192e065
+      internalID: -64567975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_14
+      rect:
+        serializedVersion: 2
+        x: 1600
+        y: 800
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f62ddf14965c6e3498230df4988c3aba
+      internalID: 254892998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_15
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 400
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1acf3f0dae112a14380da527eb847bd9
+      internalID: -1051382522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_16
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 400
+        width: 400
+        height: 400
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7948113b89d988e4bbc65ff22a94a83b
+      internalID: -1324442210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: dan_wake_up_sprite_sheet_17
+      rect:
+        serializedVersion: 2
         x: 800
         y: 400
         width: 400
@@ -373,14 +499,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e96fe6076507d844b80f9fcfc9eb46f5
-      internalID: -994338365
+      spriteID: a1b516b0fe1315143a2d8ac35d180185
+      internalID: 1894341799
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_12
+      name: dan_wake_up_sprite_sheet_18
       rect:
         serializedVersion: 2
         x: 1200
@@ -394,14 +520,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 668cdb166ffd5b14294ef79e3ea7bc62
-      internalID: -743713407
+      spriteID: 507d0d8d9adadbb4faef919f2aedce38
+      internalID: -369969511
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_13
+      name: dan_wake_up_sprite_sheet_19
       rect:
         serializedVersion: 2
         x: 1600
@@ -415,98 +541,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6d605161550fe49429669c9301b3fffb
-      internalID: -466790935
+      spriteID: a068cef3c595d3f4aaaa9ab9b1ba7358
+      internalID: -1575718681
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_14
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 400
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e1a7ae54bf3cdc64a81242880278d071
-      internalID: 815796887
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_15
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 400
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9226f8e12d3a0f14aa9dd42b13cc702d
-      internalID: -727540916
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_16
-      rect:
-        serializedVersion: 2
-        x: 2800
-        y: 400
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a51a443b5427166479ca5a8afe9947ea
-      internalID: 1084019747
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_17
-      rect:
-        serializedVersion: 2
-        x: 3200
-        y: 400
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ca35a779b497ee742b67c6885389c40b
-      internalID: 406148048
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_18
+      name: dan_wake_up_sprite_sheet_20
       rect:
         serializedVersion: 2
         x: 0
@@ -520,14 +562,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae7e9980fb0b25b4492a8d16b8425ddd
-      internalID: 155850690
+      spriteID: 80f077f6bf96111429cdd3854bfaedfc
+      internalID: 1785293333
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_19
+      name: dan_wake_up_sprite_sheet_21
       rect:
         serializedVersion: 2
         x: 400
@@ -541,14 +583,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 04236af879ab0d045a98d8a3fcbf61b0
-      internalID: 1876117433
+      spriteID: 931ac19ccda1bde4d82f0cc64adf65b8
+      internalID: -530057748
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_20
+      name: dan_wake_up_sprite_sheet_22
       rect:
         serializedVersion: 2
         x: 800
@@ -562,14 +604,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c1278fa5b989dc54687f4bdc3d42805f
-      internalID: 1947265402
+      spriteID: 82ea8965a4750de4ba0769599a8509df
+      internalID: 2107659796
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_21
+      name: dan_wake_up_sprite_sheet_23
       rect:
         serializedVersion: 2
         x: 1200
@@ -583,14 +625,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0157e414cf0a721438aa9140ac85e641
-      internalID: 1130571769
+      spriteID: 78e470506f9733f40b7282351d4b7b36
+      internalID: -576903180
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_22
+      name: dan_wake_up_sprite_sheet_24
       rect:
         serializedVersion: 2
         x: 1600
@@ -604,92 +646,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 196dabbbf11679740bf2c35c41d6ed44
-      internalID: 715413878
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_23
-      rect:
-        serializedVersion: 2
-        x: 2000
-        y: 0
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cb3e39b654d751b4296bf529b305d0cc
-      internalID: 179736640
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_24
-      rect:
-        serializedVersion: 2
-        x: 2400
-        y: 0
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 01889cb17efa3324db677457f16cd7cb
-      internalID: -1022872223
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_25
-      rect:
-        serializedVersion: 2
-        x: 2800
-        y: 0
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d7886076ecd444d4c868a871f61fca74
-      internalID: -140982252
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: dan_wake_up_sprite_sheet_26
-      rect:
-        serializedVersion: 2
-        x: 3200
-        y: 0
-        width: 400
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 660aa11cb32947f4eb3ef76025f20f2f
-      internalID: 2051626161
+      spriteID: 67d2fea4e3480b7458806f150e993964
+      internalID: 536728289
       vertices: []
       indices: 
       edges: []
@@ -697,7 +655,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 594d8f18e23e405428ff7b2b258a630e
+    spriteID: cb800ade4ba8c3e409cbb85301b694d8
     internalID: 0
     vertices: []
     indices: 
@@ -705,33 +663,31 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      dan_wake_up_sprite_sheet_25: -140982252
-      dan_wake_up_sprite_sheet_20: 1947265402
-      dan_wake_up_sprite_sheet_2: -466315515
-      dan_wake_up_sprite_sheet_19: 1876117433
-      dan_wake_up_sprite_sheet_5: 1258685518
-      dan_wake_up_sprite_sheet_6: 522720626
-      dan_wake_up_sprite_sheet_23: 179736640
-      dan_wake_up_sprite_sheet_0: 515571748
-      dan_wake_up_sprite_sheet_10: 2057832749
-      dan_wake_up_sprite_sheet_15: -727540916
-      dan_wake_up_sprite_sheet_9: 1685089995
-      dan_wake_up_sprite_sheet_4: -1253483759
-      dan_wake_up_sprite_sheet_14: 815796887
-      dan_wake_up_sprite_sheet_18: 155850690
-      dan_wake_up_sprite_sheet_8: 968330651
-      dan_wake_up_sprite_sheet_24: -1022872223
-      dan_wake_up_sprite_sheet_21: 1130571769
-      dan_wake_up_sprite_sheet_11: -994338365
-      dan_wake_up_sprite_sheet_1: 659972025
-      dan_wake_up_sprite_sheet_26: 2051626161
-      dan_wake_up_sprite_sheet_7: 832228739
-      dan_wake_up_sprite_sheet_12: -743713407
-      dan_wake_up_sprite_sheet_16: 1084019747
-      dan_wake_up_sprite_sheet_17: 406148048
-      dan_wake_up_sprite_sheet_13: -466790935
-      dan_wake_up_sprite_sheet_22: 715413878
-      dan_wake_up_sprite_sheet_3: 489650947
+      dan_wake_up_sprite_sheet_20: 1785293333
+      dan_wake_up_sprite_sheet_2: 107334639
+      dan_wake_up_sprite_sheet_19: -1575718681
+      dan_wake_up_sprite_sheet_5: -1786708955
+      dan_wake_up_sprite_sheet_6: 630296076
+      dan_wake_up_sprite_sheet_23: -576903180
+      dan_wake_up_sprite_sheet_0: -357622167
+      dan_wake_up_sprite_sheet_10: -1348126916
+      dan_wake_up_sprite_sheet_15: -1051382522
+      dan_wake_up_sprite_sheet_9: -1929508521
+      dan_wake_up_sprite_sheet_4: 1037345740
+      dan_wake_up_sprite_sheet_14: 254892998
+      dan_wake_up_sprite_sheet_18: -369969511
+      dan_wake_up_sprite_sheet_8: 1596904772
+      dan_wake_up_sprite_sheet_24: 536728289
+      dan_wake_up_sprite_sheet_21: -530057748
+      dan_wake_up_sprite_sheet_11: -2130055080
+      dan_wake_up_sprite_sheet_1: 346380849
+      dan_wake_up_sprite_sheet_7: 446991892
+      dan_wake_up_sprite_sheet_12: 1457005181
+      dan_wake_up_sprite_sheet_16: -1324442210
+      dan_wake_up_sprite_sheet_17: 1894341799
+      dan_wake_up_sprite_sheet_13: -64567975
+      dan_wake_up_sprite_sheet_22: 2107659796
+      dan_wake_up_sprite_sheet_3: 1459711649
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
