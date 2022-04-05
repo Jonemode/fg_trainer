@@ -13,6 +13,9 @@ public class SimDropdown : MonoBehaviour
     [SerializeField]
     public Animator opponentAnimator;
 
+    [SerializeField]
+    public StatsPanel statsPanel;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,44 +29,40 @@ public class SimDropdown : MonoBehaviour
         simDropdown.onValueChanged.AddListener(OnDropdownChange);
     }
 
-    public bool IsPS4Mode () {
-        return simDropdown.value == 0;
-    }
-
-    public bool IsPCMode() {
-        return simDropdown.value == 1;
+    public SimMode GetSimMode() {
+        return (SimMode)simDropdown.value;
     }
 
     private void OnDropdownChange(int e) {
-        switch (e) {
-            case 0:
-                // PS4
+        SimMode mode = (SimMode)e;
+        switch (mode) {
+            case SimMode.PS4:
+                Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
+                Application.targetFrameRate = GameConfig.baseFrameRate;
+                playerAnimator.speed = 1;
+                opponentAnimator.speed = 1;
+                statsPanel.LoadHighScores(mode);
+                break;
+            case SimMode.PC:
                 Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
                 Application.targetFrameRate = GameConfig.baseFrameRate;
                 playerAnimator.speed = 1;
                 opponentAnimator.speed = 1;
                 break;
-            case 1:
-                // PC
-                Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
-                Application.targetFrameRate = GameConfig.baseFrameRate;
-                playerAnimator.speed = 1;
-                opponentAnimator.speed = 1;
-                break;
-            case 2:
-                // 0.5x
+            case SimMode.HalfSpeed:
                 Time.fixedDeltaTime = 2 * GameConfig.baseFixedDeltaTime;
                 Application.targetFrameRate = GameConfig.baseFrameRate / 2;
                 playerAnimator.speed = 0.5f;
                 opponentAnimator.speed = 0.5f;
                 break;
-            case 3:
-                // 0.25x
+            case SimMode.QuarterSpeed:
                 Time.fixedDeltaTime = 4 * GameConfig.baseFixedDeltaTime;
                 Application.targetFrameRate = GameConfig.baseFrameRate / 4;
                 playerAnimator.speed = 0.25f;
                 opponentAnimator.speed = 0.25f;
                 break;
         }
+        statsPanel.LoadHighScores(mode);
+        statsPanel.ResetCurrentScore();
     }
 }

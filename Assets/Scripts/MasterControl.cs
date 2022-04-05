@@ -12,6 +12,9 @@ public class MasterControl : MonoBehaviour
     public Button specialButton;
 
     [SerializeField]
+    public Button resetHighScoreButton;
+
+    [SerializeField]
     public GameObject player;
 
     [SerializeField]
@@ -71,6 +74,7 @@ public class MasterControl : MonoBehaviour
         // Setup button clicks
         createButtonBinding(normalButton, normalButtonClickTrigger);
         createButtonBinding(specialButton, specialButtonClickTrigger);
+        resetHighScoreButton.onClick.AddListener(resetHighScoreClick);
 
         // Setup initial character state
         changePlayerState(CharacterState.Neutral);
@@ -193,7 +197,7 @@ public class MasterControl : MonoBehaviour
                 changeOpponentState(CharacterState.SpecialHitStun);
             } else {
                 changeOpponentState(CharacterState.BlockStun);
-                statsPanel.ResetScore();
+                statsPanel.ResetCurrentScore();
             }
        } else {
             playerSpecialStartupFrame += 1;
@@ -206,9 +210,9 @@ public class MasterControl : MonoBehaviour
             changePlayerState(CharacterState.Neutral);
             if (opponentState == CharacterState.SpecialHitStun) {
                 // Player performed special at the right time
-                statsPanel.HitConfirmCount++;
+                statsPanel.AddHitConfirm(simDropdown.GetSimMode());
             } else {
-                statsPanel.ResetScore();
+                statsPanel.ResetCurrentScore();
             }
             statsPanel.UpdateConfirmFrameText(playerSpecialActivateFrame, opponentState);
             playerSpecialActivateFrame = 0;
@@ -222,7 +226,7 @@ public class MasterControl : MonoBehaviour
         if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             changeOpponentState(CharacterState.Neutral);
             // Player didn't execute special and they should have
-            statsPanel.ResetScore();
+            statsPanel.ResetCurrentScore();
         } else {
             opponentRecoveryFrame += 1;
         }
@@ -234,7 +238,7 @@ public class MasterControl : MonoBehaviour
             changeOpponentState(CharacterState.Neutral);
             if (playerState == CharacterState.Recovery) {
                 // Player successfully did not activate special
-                statsPanel.BlockConfirmCount++;
+                statsPanel.AddBlockConfirm(simDropdown.GetSimMode());
             }
         } else {
             opponentRecoveryFrame += 1;
@@ -261,7 +265,7 @@ public class MasterControl : MonoBehaviour
 
     private void normalButtonClickTrigger(BaseEventData e) {
         if (handleNormalButtonClickInFrame == -1) {
-            if (simDropdown.IsPS4Mode()) {
+            if (simDropdown.GetSimMode() == SimMode.PS4) {
                 handleNormalButtonClickInFrame = GameConfig.ps4FrameLag;
             } else {
                 handleNormalButtonClickInFrame = 0;
@@ -277,7 +281,7 @@ public class MasterControl : MonoBehaviour
 
     private void specialButtonClickTrigger(BaseEventData e) {
         if (handleSpecialButtonClickInFrame == -1) {
-            if (simDropdown.IsPS4Mode()) {
+            if (simDropdown.GetSimMode() == SimMode.PS4) {
                 handleSpecialButtonClickInFrame = GameConfig.ps4FrameLag;
             } else {
                 handleSpecialButtonClickInFrame = 0;
@@ -286,13 +290,22 @@ public class MasterControl : MonoBehaviour
     }
 
     private void specialButtonClickAction() {
+        if (playerState == CharacterState.SpecialStartup || playerState == CharacterState.SpecialRecovery) {
+            // User double clicked, just return
+            return;
+        }
+
         if (playerState == CharacterState.Neutral ||
             (playerState == CharacterState.Recovery && playerRecoveryFrame < GameConfig.confirmWindowFrames)) {
             playerSpecialActivateFrame = playerRecoveryFrame;
             changePlayerState(CharacterState.SpecialStartup);
         } else {
-            statsPanel.ResetScore();
+            statsPanel.ResetCurrentScore();
         }
+    }
+
+    private void resetHighScoreClick() {
+        statsPanel.ResetHighScore(simDropdown.GetSimMode());
     }
 
     private void createButtonBinding(Button button, Action<BaseEventData> cb) {
