@@ -50,7 +50,6 @@ public class MasterControl : MonoBehaviour
     private int playerRecoveryFrame = 0;
     private int playerSpecialStartupFrame = 0;
     private int playerSpecialRecoveryFrame = 0;
-    private int playerSpecialActivateFrame = 0;
     private int playerCrouchFrame = 0;
     private int opponentRecoveryFrame = 0;
     private int opponentSpecialRecoveryFrame = 0;
@@ -214,8 +213,6 @@ public class MasterControl : MonoBehaviour
             } else {
                 statsPanel.ResetCurrentScore();
             }
-            statsPanel.UpdateConfirmFrameText(playerSpecialActivateFrame, opponentState);
-            playerSpecialActivateFrame = 0;
         } else {
             playerSpecialRecoveryFrame += 1;
         }
@@ -225,7 +222,7 @@ public class MasterControl : MonoBehaviour
     private void handleHitStunFrame() {
         if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             changeOpponentState(CharacterState.Neutral);
-            // Player didn't execute special and they should have
+            // Player didn't execute special properly and they should have
             statsPanel.ResetCurrentScore();
         } else {
             opponentRecoveryFrame += 1;
@@ -275,6 +272,7 @@ public class MasterControl : MonoBehaviour
 
     private void normalButtonClickAction() {
         if (playerState == CharacterState.Neutral && opponentState == CharacterState.Neutral) {
+            statsPanel.ClearConfirmFrameText();
             changePlayerState(CharacterState.Crouch);
         }
     }
@@ -295,12 +293,16 @@ public class MasterControl : MonoBehaviour
             return;
         }
 
-        if (playerState == CharacterState.Neutral ||
-            (playerState == CharacterState.Recovery && playerRecoveryFrame < GameConfig.confirmWindowFrames)) {
-            playerSpecialActivateFrame = playerRecoveryFrame;
+        if (playerState == CharacterState.Neutral || (playerState == CharacterState.Recovery && playerRecoveryFrame < GameConfig.confirmWindowFrames)) {
+            if (opponentState == CharacterState.HitStun) {
+                statsPanel.UpdateConfirmFrameTextSuccess(playerRecoveryFrame);
+            } else {
+                statsPanel.UpdateConfirmFrameTextFail(playerRecoveryFrame);
+            }
             changePlayerState(CharacterState.SpecialStartup);
         } else {
             statsPanel.ResetCurrentScore();
+            statsPanel.UpdateConfirmFrameTextFail(playerRecoveryFrame);
         }
     }
 

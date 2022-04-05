@@ -61,7 +61,6 @@ public class StatsPanel : MonoBehaviour
     public void ResetCurrentScore() {
         hitConfirmCount = 0;
         blockConfirmCount = 0;
-        confirmFrameText.SetText("");
         hitConfirmCountText.SetText(hitConfirmCount.ToString());
         blockConfirmCountText.SetText(blockConfirmCount.ToString());
     }
@@ -75,19 +74,21 @@ public class StatsPanel : MonoBehaviour
         blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
     }
 
-    public void UpdateConfirmFrameText(int playerSpecialActivateFrame, CharacterState opponentState) {
-        if (playerSpecialActivateFrame == 0) {
-            confirmFrameText.SetText("");
-        } else {
-            // Frame
-            confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
+    public void UpdateConfirmFrameTextSuccess(int playerSpecialActivateFrame) {
+        // Frame
+        confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
+        // Color
+        confirmFrameText.color = Color.green;
+    }
 
-            // Color
-            if (opponentState == CharacterState.SpecialHitStun) {
-                confirmFrameText.color = Color.green;
-            } else {
-                confirmFrameText.color = Color.red;
-            }
-        }
+    public void UpdateConfirmFrameTextFail(int playerSpecialActivateFrame) {
+        // Frame
+        confirmFrameText.SetText((playerSpecialActivateFrame + 1).ToString());
+        // Color
+        confirmFrameText.color = Color.red;
+    }
+
+    public void ClearConfirmFrameText() {
+        confirmFrameText.SetText("");
     }
 }
