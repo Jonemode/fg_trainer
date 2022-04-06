@@ -22,6 +22,13 @@ public class SoundSystem : MonoBehaviour
     [SerializeField]
     public AudioSource karinSpecialAttackVoice;
 
+    [SerializeField]
+    public GameObject soundSystem;
+
+    private void Start() {
+        
+    }
+
     public void PlayNormalAttackHit() {
         normalAttackHit.Play();
     }
