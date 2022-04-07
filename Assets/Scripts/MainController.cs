@@ -21,9 +21,6 @@ public class MainController : MonoBehaviour
     public StunController stunController;
 
     [SerializeField]
-    public CounterHit counterHit;
-
-    [SerializeField]
     public SoundSystem soundSystem;
 
     [SerializeField]
@@ -159,7 +156,6 @@ public class MainController : MonoBehaviour
             } else {
                 // Opponent got hit
                 changeOpponentState(CharacterState.HitStun);
-                counterHit.UpdateCounterHitTextOnHit();
             }
         } else {
             playerStartupFrame += 1;
