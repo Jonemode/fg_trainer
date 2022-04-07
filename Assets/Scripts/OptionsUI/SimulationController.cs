@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class SimDropdown : MonoBehaviour
+public class SimulationController : MonoBehaviour
 {
     [SerializeField]
     public TMP_Dropdown simDropdown;
@@ -14,7 +14,7 @@ public class SimDropdown : MonoBehaviour
     public Animator opponentAnimator;
 
     [SerializeField]
-    public StatsPanel statsPanel;
+    public ScoreController scoreController;
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +41,6 @@ public class SimDropdown : MonoBehaviour
                 Application.targetFrameRate = GameConfig.baseFrameRate;
                 playerAnimator.speed = 1;
                 opponentAnimator.speed = 1;
-                statsPanel.LoadHighScores(mode);
                 break;
             case SimMode.PC:
                 Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
@@ -62,7 +61,7 @@ public class SimDropdown : MonoBehaviour
                 opponentAnimator.speed = 0.25f;
                 break;
         }
-        statsPanel.LoadHighScores(mode);
-        statsPanel.ResetCurrentScore();
+        scoreController.LoadHighScores();
+        scoreController.ResetCurrentScore();
     }
 }

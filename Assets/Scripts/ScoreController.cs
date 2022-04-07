@@ -1,7 +1,8 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class StatsPanel : MonoBehaviour
+public class ScoreController : MonoBehaviour
 {
     [SerializeField]
     public TMP_Text hitConfirmCountText;
@@ -18,42 +19,59 @@ public class StatsPanel : MonoBehaviour
     [SerializeField]
     public TMP_Text confirmFrameText;
 
+    [SerializeField]
+    public Toggle stunBarToggle;
+
+    [SerializeField]
+    public TMP_Dropdown simDropdown;
+
+    [SerializeField]
+    public Button resetHighScoreButton;
+
     private int hitConfirmCount = 0;
     private int blockConfirmCount = 0;
     private int hitConfirmCountHigh = 0;
     private int blockConfirmCountHigh = 0;
 
-    private const string hitConfirmPlayerPrefsKey = "hit_confirm_high_mode_{0}";
-    private const string blockConfirmPlayerPrefsKey = "block_confirm_high_mode_{0}";
+    private const string hitConfirmPlayerPrefsKey = "hit_confirm_high_mode_{0}_stunbar_{1}";
+    private const string blockConfirmPlayerPrefsKey = "block_confirm_high_mode_{0}_stunbar_{1}";
 
     void Start() {
-        LoadHighScores((int)SimMode.PS4);
+        resetHighScoreButton.onClick.AddListener(ResetHighScore);
+
+        LoadHighScores();
     }
 
-    public void AddHitConfirm(SimMode simMode) {
+    public void AddHitConfirm() {
         hitConfirmCount++;
         if (hitConfirmCount > hitConfirmCountHigh) {
             hitConfirmCountHigh = hitConfirmCount;
-            PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, (int)simMode), hitConfirmCountHigh);
+            int simMode = simDropdown.value;
+            bool stunBarEnabled = stunBarToggle.isOn;
+            PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, stunBarEnabled), hitConfirmCountHigh);
             hitConfirmHighText.SetText(hitConfirmCountHigh.ToString());
         }
         hitConfirmCountText.SetText(hitConfirmCount.ToString());
     }
 
-    public void AddBlockConfirm(SimMode simMode) {
+    public void AddBlockConfirm() {
         blockConfirmCount++;
         if (blockConfirmCount > blockConfirmCountHigh) {
             blockConfirmCountHigh = blockConfirmCount;
-            PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, (int)simMode), blockConfirmCountHigh);
+            int simMode = simDropdown.value;
+            bool stunBarEnabled = stunBarToggle.isOn;
+            PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, stunBarEnabled), blockConfirmCountHigh);
             blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
         }
         confirmFrameText.SetText("");
         blockConfirmCountText.SetText(blockConfirmCount.ToString());
     }
 
-    public void LoadHighScores(SimMode simMode) {
-        hitConfirmCountHigh = PlayerPrefs.GetInt(string.Format(hitConfirmPlayerPrefsKey, (int)simMode));
-        blockConfirmCountHigh = PlayerPrefs.GetInt(string.Format(blockConfirmPlayerPrefsKey, (int)simMode));
+    public void LoadHighScores() {
+        bool stunBarEnabled = stunBarToggle.isOn;
+        int simMode = simDropdown.value;
+        hitConfirmCountHigh = PlayerPrefs.GetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, stunBarEnabled));
+        blockConfirmCountHigh = PlayerPrefs.GetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, stunBarEnabled));
         hitConfirmHighText.SetText(hitConfirmCountHigh.ToString());
         blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
     }
@@ -65,11 +83,13 @@ public class StatsPanel : MonoBehaviour
         blockConfirmCountText.SetText(blockConfirmCount.ToString());
     }
 
-    public void ResetHighScore(SimMode simMode) {
+    private void ResetHighScore() {
         hitConfirmCountHigh = 0;
         blockConfirmCountHigh = 0;
-        PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, simMode), 0);
-        PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode), 0);
+        bool stunBarEnabled = stunBarToggle.isOn;
+        int simMode = simDropdown.value;
+        PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, stunBarEnabled), 0);
+        PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, stunBarEnabled), 0);
         hitConfirmHighText.SetText(hitConfirmCountHigh.ToString());
         blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
     }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OpponentStun : MonoBehaviour
+public class StunController : MonoBehaviour
 {
     [SerializeField]
     public GameObject stunBar;
@@ -11,6 +11,9 @@ public class OpponentStun : MonoBehaviour
 
     [SerializeField]
     public Toggle stunBarToggle;
+
+    [SerializeField]
+    public ScoreController scoreController;
 
     private RectTransform stunBarRT;
 
@@ -43,6 +46,8 @@ public class OpponentStun : MonoBehaviour
 
         stunBarToggle.onValueChanged.AddListener((isVisible) => {
             stunBarContainer.SetActive(isVisible);
+            scoreController.LoadHighScores();
+            scoreController.ResetCurrentScore();
         });
     }
 

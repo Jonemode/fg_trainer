@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MasterControl : MonoBehaviour
+public class MainController : MonoBehaviour
 {
     [SerializeField]
     public Button normalButton;
@@ -12,16 +12,13 @@ public class MasterControl : MonoBehaviour
     public Button specialButton;
 
     [SerializeField]
-    public Button resetHighScoreButton;
-
-    [SerializeField]
     public GameObject player;
 
     [SerializeField]
     public GameObject opponent;
 
     [SerializeField]
-    public OpponentStun opponentStun;
+    public StunController stunController;
 
     [SerializeField]
     public CounterHit counterHit;
@@ -30,10 +27,10 @@ public class MasterControl : MonoBehaviour
     public SoundSystem soundSystem;
 
     [SerializeField]
-    public SimDropdown simDropdown;
+    public SimulationController simulationController;
 
     [SerializeField]
-    public StatsPanel statsPanel;
+    public ScoreController scoreController;
 
     [SerializeField]
     public Animator playerAnimator;
@@ -73,7 +70,6 @@ public class MasterControl : MonoBehaviour
         // Setup button clicks
         createButtonBinding(normalButton, normalButtonClickTrigger);
         createButtonBinding(specialButton, specialButtonClickTrigger);
-        resetHighScoreButton.onClick.AddListener(resetHighScoreClick);
 
         // Setup initial character state
         changePlayerState(CharacterState.Neutral);
@@ -196,7 +192,7 @@ public class MasterControl : MonoBehaviour
                 changeOpponentState(CharacterState.SpecialHitStun);
             } else {
                 changeOpponentState(CharacterState.BlockStun);
-                statsPanel.ResetCurrentScore();
+                scoreController.ResetCurrentScore();
             }
        } else {
             playerSpecialStartupFrame += 1;
@@ -209,9 +205,9 @@ public class MasterControl : MonoBehaviour
             changePlayerState(CharacterState.Neutral);
             if (opponentState == CharacterState.SpecialHitStun) {
                 // Player performed special at the right time
-                statsPanel.AddHitConfirm(simDropdown.GetSimMode());
+                scoreController.AddHitConfirm();
             } else {
-                statsPanel.ResetCurrentScore();
+                scoreController.ResetCurrentScore();
             }
         } else {
             playerSpecialRecoveryFrame += 1;
@@ -223,7 +219,7 @@ public class MasterControl : MonoBehaviour
         if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             changeOpponentState(CharacterState.Neutral);
             // Player didn't execute special properly and they should have
-            statsPanel.ResetCurrentScore();
+            scoreController.ResetCurrentScore();
         } else {
             opponentRecoveryFrame += 1;
         }
@@ -235,7 +231,7 @@ public class MasterControl : MonoBehaviour
             changeOpponentState(CharacterState.Neutral);
             if (playerState == CharacterState.Recovery) {
                 // Player successfully did not activate special
-                statsPanel.AddBlockConfirm(simDropdown.GetSimMode());
+                scoreController.AddBlockConfirm();
             }
         } else {
             opponentRecoveryFrame += 1;
@@ -262,7 +258,7 @@ public class MasterControl : MonoBehaviour
 
     private void normalButtonClickTrigger(BaseEventData e) {
         if (handleNormalButtonClickInFrame == -1) {
-            if (simDropdown.GetSimMode() == SimMode.PS4) {
+            if (simulationController.GetSimMode() == SimMode.PS4) {
                 handleNormalButtonClickInFrame = GameConfig.ps4FrameLag;
             } else {
                 handleNormalButtonClickInFrame = 0;
@@ -272,14 +268,14 @@ public class MasterControl : MonoBehaviour
 
     private void normalButtonClickAction() {
         if (playerState == CharacterState.Neutral && opponentState == CharacterState.Neutral) {
-            statsPanel.ClearConfirmFrameText();
+            scoreController.ClearConfirmFrameText();
             changePlayerState(CharacterState.Crouch);
         }
     }
 
     private void specialButtonClickTrigger(BaseEventData e) {
         if (handleSpecialButtonClickInFrame == -1) {
-            if (simDropdown.GetSimMode() == SimMode.PS4) {
+            if (simulationController.GetSimMode() == SimMode.PS4) {
                 handleSpecialButtonClickInFrame = GameConfig.ps4FrameLag;
             } else {
                 handleSpecialButtonClickInFrame = 0;
@@ -295,19 +291,15 @@ public class MasterControl : MonoBehaviour
 
         if (playerState == CharacterState.Neutral || (playerState == CharacterState.Recovery && playerRecoveryFrame < GameConfig.confirmWindowFrames)) {
             if (opponentState == CharacterState.HitStun) {
-                statsPanel.UpdateConfirmFrameTextSuccess(playerRecoveryFrame);
+                scoreController.UpdateConfirmFrameTextSuccess(playerRecoveryFrame);
             } else {
-                statsPanel.UpdateConfirmFrameTextFail(playerRecoveryFrame);
+                scoreController.UpdateConfirmFrameTextFail(playerRecoveryFrame);
             }
             changePlayerState(CharacterState.SpecialStartup);
         } else {
-            statsPanel.ResetCurrentScore();
-            statsPanel.UpdateConfirmFrameTextFail(playerRecoveryFrame);
+            scoreController.ResetCurrentScore();
+            scoreController.UpdateConfirmFrameTextFail(playerRecoveryFrame);
         }
-    }
-
-    private void resetHighScoreClick() {
-        statsPanel.ResetHighScore(simDropdown.GetSimMode());
     }
 
     private void createButtonBinding(Button button, Action<BaseEventData> cb) {
@@ -363,17 +355,17 @@ public class MasterControl : MonoBehaviour
                 break;
             case CharacterState.BlockStun:
                 // Specify layer and normalizedTime to start the animation from the start if it's currently playing
-                opponentStun.UpdateStunOnBlock();
+                stunController.UpdateStunOnBlock();
                 opponentAnimator.Play("block", -1, 0f);
                 break;
             case CharacterState.HitStun:
-                opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
+                stunController.UpdateStunOnHit(GameConfig.stunAmount);
                 opponentAnimator.Play("hit");
                 soundSystem.PlayNormalAttackHit();
                 soundSystem.PlayDanHitVoice();
                 break;
             case CharacterState.SpecialHitStun:
-                opponentStun.UpdateStunOnHit(GameConfig.stunAmount);
+                stunController.UpdateStunOnHit(GameConfig.stunAmount);
                 opponentAnimator.Play("special_hit");
                 soundSystem.PlaySpecialAttackHit();
                 soundSystem.PlayDanSpecialHitVoice();

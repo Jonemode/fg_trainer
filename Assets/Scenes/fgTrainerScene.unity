@@ -1765,14 +1765,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalButton: {fileID: 1161637328}
   specialButton: {fileID: 997230525}
-  resetHighScoreButton: {fileID: 223610827}
   player: {fileID: 285757011}
   opponent: {fileID: 1614600730}
-  opponentStun: {fileID: 311079898}
+  stunController: {fileID: 311079898}
   counterHit: {fileID: 311079897}
   soundSystem: {fileID: 311079895}
-  simDropdown: {fileID: 311079896}
-  statsPanel: {fileID: 311079899}
+  simulationController: {fileID: 311079896}
+  scoreController: {fileID: 311079899}
   playerAnimator: {fileID: 285757014}
   opponentAnimator: {fileID: 1614600733}
 --- !u!4 &311079894
@@ -1825,7 +1824,7 @@ MonoBehaviour:
   simDropdown: {fileID: 191543193}
   playerAnimator: {fileID: 285757014}
   opponentAnimator: {fileID: 1614600733}
-  statsPanel: {fileID: 311079899}
+  scoreController: {fileID: 311079899}
 --- !u!114 &311079897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1854,6 +1853,7 @@ MonoBehaviour:
   stunBar: {fileID: 244639969}
   stunBarContainer: {fileID: 2067557349}
   stunBarToggle: {fileID: 767929471}
+  scoreController: {fileID: 311079899}
   StunRetainmentFrame: 100
 --- !u!114 &311079899
 MonoBehaviour:
@@ -1872,6 +1872,9 @@ MonoBehaviour:
   blockConfirmCountText: {fileID: 291220930}
   blockConfirmHighText: {fileID: 54283563}
   confirmFrameText: {fileID: 410216013}
+  stunBarToggle: {fileID: 767929471}
+  simDropdown: {fileID: 191543193}
+  resetHighScoreButton: {fileID: 223610827}
 --- !u!114 &311079900
 MonoBehaviour:
   m_ObjectHideFlags: 0
