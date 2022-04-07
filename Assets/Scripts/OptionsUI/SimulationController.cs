@@ -19,13 +19,11 @@ public class SimulationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<TMP_Dropdown.OptionData> simOptions = new List<TMP_Dropdown.OptionData>() {
-            new TMP_Dropdown.OptionData("PS4"),
-            new TMP_Dropdown.OptionData("PC"),
-            new TMP_Dropdown.OptionData("0.5x"),
-            new TMP_Dropdown.OptionData("0.25x"),
-        };
-        simDropdown.AddOptions(simOptions);
+        simDropdown.value = (int)SimMode.PC;
+        Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
+        Application.targetFrameRate = GameConfig.baseFrameRate;
+        playerAnimator.speed = 1;
+        opponentAnimator.speed = 1;
         simDropdown.onValueChanged.AddListener(OnDropdownChange);
     }
 

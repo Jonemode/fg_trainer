@@ -41,16 +41,6 @@ public class SoundSystem : MonoBehaviour
     private AudioSource currentlyPlayingTheme;
 
     void Start() {
-        List<TMP_Dropdown.OptionData> opts = new List<TMP_Dropdown.OptionData>() {
-            new TMP_Dropdown.OptionData("The Grid"),
-            new TMP_Dropdown.OptionData("Ring Of Galaxy"),
-            new TMP_Dropdown.OptionData("Suzaku Castle"),
-            new TMP_Dropdown.OptionData("AirForce Base"),
-            new TMP_Dropdown.OptionData("FANG Theme"),
-            new TMP_Dropdown.OptionData("Karin Theme"),
-            new TMP_Dropdown.OptionData("Nash Theme"),
-        };
-        bgmSelector.AddOptions(opts);
         bgmSelector.onValueChanged.AddListener(OnDropdownSelect);
 
         GameObject BGM = soundSystem.transform.Find("BGM").gameObject;
@@ -62,8 +52,10 @@ public class SoundSystem : MonoBehaviour
         karinTheme = BGM.transform.Find("KarinTheme").gameObject.GetComponent<AudioSource>();
         nashTheme = BGM.transform.Find("NashTheme").gameObject.GetComponent<AudioSource>();
 
-        currentlyPlayingTheme = theGridTheme;
-        theGridTheme.Play();
+        System.Random rnd = new System.Random();
+        bgmSelector.value = rnd.Next(0, 6);
+        OnDropdownSelect(bgmSelector.value);
+        bgmSelector.onValueChanged.AddListener(OnDropdownSelect);
     }
 
     private void OnDropdownSelect(int e) {
@@ -93,7 +85,9 @@ public class SoundSystem : MonoBehaviour
     }
 
     private void PlayTheme(AudioSource newTheme) {
-        currentlyPlayingTheme.Stop();
+        if (currentlyPlayingTheme != null) {
+            currentlyPlayingTheme.Stop();
+        }
         newTheme.Play();
         currentlyPlayingTheme = newTheme;
     }

@@ -21,23 +21,16 @@ public class Stage : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        List<TMP_Dropdown.OptionData> opts = new List<TMP_Dropdown.OptionData>() {
-            new TMP_Dropdown.OptionData("The Grid"),
-            new TMP_Dropdown.OptionData("Air Force"),
-            new TMP_Dropdown.OptionData("Galaxy"),
-            new TMP_Dropdown.OptionData("Suzaku"),
-            new TMP_Dropdown.OptionData("Shadaloo"),
-        };
-        stageSelector.AddOptions(opts);
-        stageSelector.onValueChanged.AddListener(OnDropdownChange);
-
         theGrid = backgrounds.transform.Find("TheGrid").gameObject;
         airForceBase = backgrounds.transform.Find("AirForceBase").gameObject;
         ringOfGalaxy = backgrounds.transform.Find("RingOfGalaxy").gameObject;
         suzakuCastle = backgrounds.transform.Find("SuzakuCastle").gameObject;
         shadalooHideout = backgrounds.transform.Find("ShadalooHideout").gameObject;
 
-        currentStage = theGrid;
+        System.Random rnd = new System.Random();
+        stageSelector.value = rnd.Next(0, 4);
+        OnDropdownChange(stageSelector.value);
+        stageSelector.onValueChanged.AddListener(OnDropdownChange);
     }
 
     private void OnDropdownChange(int e) {
@@ -61,7 +54,9 @@ public class Stage : MonoBehaviour
     }
 
     private void ChangeStage(GameObject newStage) {
-        currentStage.SetActive(false);
+        if (currentStage != null) {
+            currentStage.SetActive(false);
+        }
         newStage.SetActive(true);
         currentStage = newStage;
     }

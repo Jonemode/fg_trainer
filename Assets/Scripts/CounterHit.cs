@@ -22,7 +22,6 @@ public class CounterHit : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*
         if (counterHitText.gameObject.activeInHierarchy) {
             counterHitTextFrame += 1;
             if (counterHitTextFrame >= counterHitTextFrames) {
@@ -30,7 +29,6 @@ public class CounterHit : MonoBehaviour
                 counterHitText.gameObject.SetActive(false);
             }
         }
-        */
     }
 
     public void UpdateCounterHitTextOnHit() {

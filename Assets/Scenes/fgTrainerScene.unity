@@ -944,7 +944,15 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options: []
+    m_Options:
+    - m_Text: PS4
+      m_Image: {fileID: 0}
+    - m_Text: PC
+      m_Image: {fileID: 0}
+    - m_Text: 0.5x
+      m_Image: {fileID: 0}
+    - m_Text: 0.25x
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1033,7 +1041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 242.76514, y: -99.38199}
+  m_AnchoredPosition: {x: 242.76514, y: -99.38196}
   m_SizeDelta: {x: 410.53, y: 143.765}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &213083779
@@ -1739,14 +1747,13 @@ GameObject:
   - component: {fileID: 311079894}
   - component: {fileID: 311079893}
   - component: {fileID: 311079898}
-  - component: {fileID: 311079897}
   - component: {fileID: 311079896}
   - component: {fileID: 311079895}
   - component: {fileID: 311079899}
   - component: {fileID: 311079900}
   - component: {fileID: 311079901}
   m_Layer: 0
-  m_Name: MasterControl
+  m_Name: MainController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1769,7 +1776,6 @@ MonoBehaviour:
   player: {fileID: 285757011}
   opponent: {fileID: 1614600730}
   stunController: {fileID: 311079898}
-  counterHit: {fileID: 311079897}
   soundSystem: {fileID: 311079895}
   simulationController: {fileID: 311079896}
   scoreController: {fileID: 311079899}
@@ -1826,19 +1832,6 @@ MonoBehaviour:
   playerAnimator: {fileID: 285757014}
   opponentAnimator: {fileID: 1614600733}
   scoreController: {fileID: 311079899}
---- !u!114 &311079897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 311079892}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5292aeeba3638e745a7da92b566bb919, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  counterHitText: {fileID: 2126243985}
 --- !u!114 &311079898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2200,8 +2193,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 73, y: -225}
-  m_SizeDelta: {x: 100, y: 30}
+  m_AnchoredPosition: {x: 132, y: -225}
+  m_SizeDelta: {x: 220, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &409247955
 MonoBehaviour:
@@ -2252,7 +2245,17 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options: []
+    m_Options:
+    - m_Text: The Grid
+      m_Image: {fileID: 0}
+    - m_Text: AirForce Base
+      m_Image: {fileID: 0}
+    - m_Text: Galaxy
+      m_Image: {fileID: 0}
+    - m_Text: Suzaku
+      m_Image: {fileID: 0}
+    - m_Text: Shadaloo
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4433,7 +4436,7 @@ MonoBehaviour:
   onValueChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_IsOn: 1
+  m_IsOn: 0
 --- !u!1 &776763388
 GameObject:
   m_ObjectHideFlags: 0
@@ -5785,7 +5788,21 @@ MonoBehaviour:
   m_ItemImage: {fileID: 0}
   m_Value: 0
   m_Options:
-    m_Options: []
+    m_Options:
+    - m_Text: The Grid
+      m_Image: {fileID: 0}
+    - m_Text: Ring Of Galaxy
+      m_Image: {fileID: 0}
+    - m_Text: Suzaku Castle
+      m_Image: {fileID: 0}
+    - m_Text: AirForce Base
+      m_Image: {fileID: 0}
+    - m_Text: FANG Theme
+      m_Image: {fileID: 0}
+    - m_Text: Karin Theme
+      m_Image: {fileID: 0}
+    - m_Text: Nash Theme
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -6167,7 +6184,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: PS4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -7013,7 +7030,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: The Grid
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10212,7 +10229,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2067557350
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10231,7 +10248,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -314.54102, y: -52.01999}
+  m_AnchoredPosition: {x: -314.54102, y: -52.02002}
   m_SizeDelta: {x: 539.09204, y: 32.038}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2067557351
@@ -10728,7 +10745,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: The Grid
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
