@@ -41,8 +41,6 @@ public class SoundSystem : MonoBehaviour
     private AudioSource currentlyPlayingTheme;
 
     void Start() {
-        bgmSelector.onValueChanged.AddListener(OnDropdownSelect);
-
         GameObject BGM = soundSystem.transform.Find("BGM").gameObject;
         theGridTheme = BGM.transform.Find("TheGridTheme").gameObject.GetComponent<AudioSource>();
         ringOfGalaxyTheme = BGM.transform.Find("RingOfGalaxyTheme").gameObject.GetComponent<AudioSource>();
