@@ -28,7 +28,7 @@ public class Stage : MonoBehaviour
         shadalooHideout = backgrounds.transform.Find("ShadalooHideout").gameObject;
 
         System.Random rnd = new System.Random();
-        stageSelector.value = rnd.Next(0, 4);
+        stageSelector.value = rnd.Next(0, 5);
         OnDropdownChange(stageSelector.value);
         stageSelector.onValueChanged.AddListener(OnDropdownChange);
     }

@@ -51,7 +51,7 @@ public class SoundSystem : MonoBehaviour
         nashTheme = BGM.transform.Find("NashTheme").gameObject.GetComponent<AudioSource>();
 
         System.Random rnd = new System.Random();
-        bgmSelector.value = rnd.Next(0, 6);
+        bgmSelector.value = rnd.Next(0, 7);
         OnDropdownSelect(bgmSelector.value);
         bgmSelector.onValueChanged.AddListener(OnDropdownSelect);
     }
