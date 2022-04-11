@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ public class SimulationController : MonoBehaviour
     public Animator opponentAnimator;
 
     [SerializeField]
-    public ScoreController scoreController;
+    public TrainingController trainingController;
 
     // Start is called before the first frame update
     void Start()
@@ -32,7 +31,12 @@ public class SimulationController : MonoBehaviour
     }
 
     private void OnDropdownChange(int e) {
-        SimMode mode = (SimMode)e;
+        SetSimulationMode((SimMode)e);
+        trainingController.LoadHighScores();
+        trainingController.ResetCurrentScore();
+    }
+
+    public void SetSimulationMode(SimMode mode) {
         switch (mode) {
             case SimMode.PS4:
                 Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
@@ -59,7 +63,5 @@ public class SimulationController : MonoBehaviour
                 opponentAnimator.speed = 0.25f;
                 break;
         }
-        scoreController.LoadHighScores();
-        scoreController.ResetCurrentScore();
     }
 }

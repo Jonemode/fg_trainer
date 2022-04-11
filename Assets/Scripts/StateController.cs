@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class MainController : MonoBehaviour
+public class StateController : MonoBehaviour
 {
     [SerializeField]
     public Button normalButton;
@@ -27,13 +27,17 @@ public class MainController : MonoBehaviour
     public SimulationController simulationController;
 
     [SerializeField]
-    public ScoreController scoreController;
-
-    [SerializeField]
     public Animator playerAnimator;
 
     [SerializeField]
     public Animator opponentAnimator;
+
+    public event EventHandler NormalButtonPress;
+    public event EventHandler<ConfirmFrameEventArgs> ConfirmFrameSuccess;
+    public event EventHandler<ConfirmFrameEventArgs> ConfirmFrameFailure;
+    public event EventHandler HitConfirm;
+    public event EventHandler BlockConfirm;
+    public event EventHandler PlayerError;
 
     private CharacterState playerState;
     private CharacterState opponentState;
@@ -188,7 +192,7 @@ public class MainController : MonoBehaviour
                 changeOpponentState(CharacterState.SpecialHitStun);
             } else {
                 changeOpponentState(CharacterState.BlockStun);
-                scoreController.ResetCurrentScore();
+                PlayerError?.Invoke(this, EventArgs.Empty);
             }
        } else {
             playerSpecialStartupFrame += 1;
@@ -201,9 +205,9 @@ public class MainController : MonoBehaviour
             changePlayerState(CharacterState.Neutral);
             if (opponentState == CharacterState.SpecialHitStun) {
                 // Player performed special at the right time
-                scoreController.AddHitConfirm();
+                HitConfirm?.Invoke(this, EventArgs.Empty);
             } else {
-                scoreController.ResetCurrentScore();
+                PlayerError?.Invoke(this, EventArgs.Empty);
             }
         } else {
             playerSpecialRecoveryFrame += 1;
@@ -215,7 +219,7 @@ public class MainController : MonoBehaviour
         if (opponentRecoveryFrame >= GameConfig.hitStunRecoveryFrames) {
             changeOpponentState(CharacterState.Neutral);
             // Player didn't execute special properly and they should have
-            scoreController.ResetCurrentScore();
+            PlayerError?.Invoke(this, EventArgs.Empty);
         } else {
             opponentRecoveryFrame += 1;
         }
@@ -227,7 +231,7 @@ public class MainController : MonoBehaviour
             changeOpponentState(CharacterState.Neutral);
             if (playerState == CharacterState.Recovery) {
                 // Player successfully did not activate special
-                scoreController.AddBlockConfirm();
+                BlockConfirm?.Invoke(this, EventArgs.Empty);
             }
         } else {
             opponentRecoveryFrame += 1;
@@ -264,7 +268,7 @@ public class MainController : MonoBehaviour
 
     private void normalButtonClickAction() {
         if (playerState == CharacterState.Neutral && opponentState == CharacterState.Neutral) {
-            scoreController.ClearConfirmFrameText();
+            NormalButtonPress?.Invoke(this, EventArgs.Empty);
             changePlayerState(CharacterState.Crouch);
         }
     }
@@ -287,14 +291,14 @@ public class MainController : MonoBehaviour
 
         if (playerState == CharacterState.Neutral || (playerState == CharacterState.Recovery && playerRecoveryFrame < GameConfig.confirmWindowFrames)) {
             if (opponentState == CharacterState.HitStun) {
-                scoreController.UpdateConfirmFrameTextSuccess(playerRecoveryFrame);
+                ConfirmFrameSuccess?.Invoke(this, new ConfirmFrameEventArgs(playerRecoveryFrame));
             } else {
-                scoreController.UpdateConfirmFrameTextFail(playerRecoveryFrame);
+                ConfirmFrameFailure?.Invoke(this, new ConfirmFrameEventArgs(playerRecoveryFrame));
             }
             changePlayerState(CharacterState.SpecialStartup);
         } else {
-            scoreController.ResetCurrentScore();
-            scoreController.UpdateConfirmFrameTextFail(playerRecoveryFrame);
+            PlayerError?.Invoke(this, EventArgs.Empty);
+            ConfirmFrameFailure?.Invoke(this, new ConfirmFrameEventArgs(playerRecoveryFrame));
         }
     }
 

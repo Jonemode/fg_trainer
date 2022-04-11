@@ -13,7 +13,7 @@ public class StunController : MonoBehaviour
     public Toggle stunBarToggle;
 
     [SerializeField]
-    public ScoreController scoreController;
+    public TrainingController trainingController;
 
     private RectTransform stunBarRT;
 
@@ -45,9 +45,9 @@ public class StunController : MonoBehaviour
         redrawStunBar();
 
         stunBarToggle.onValueChanged.AddListener((isVisible) => {
-            stunBarContainer.SetActive(isVisible);
-            scoreController.LoadHighScores();
-            scoreController.ResetCurrentScore();
+            SetStunBarEnabled(isVisible);
+            trainingController.LoadHighScores();
+            trainingController.ResetCurrentScore();
         });
     }
 
@@ -88,5 +88,9 @@ public class StunController : MonoBehaviour
         //  1x padding              includes 1x padding
         float newX = ((currentStun / maxStun) * stunBarMaxPts) - stunBarMaxPts - stunBarPaddingPts;
         stunBarRT.offsetMax = new Vector2(newX, stunBarRT.offsetMax.y);
+    }
+
+    public void SetStunBarEnabled(bool enabled) {
+        stunBarContainer.SetActive(enabled);
     }
 }

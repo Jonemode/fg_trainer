@@ -1,8 +1,7 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Stage : MonoBehaviour
+public class StageController : MonoBehaviour
 {
     [SerializeField]
     public GameObject backgrounds;
