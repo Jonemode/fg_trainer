@@ -2516,9 +2516,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playModeDropdown: {fileID: 1650068457}
-  stunBarToggle: {fileID: 767929471}
-  simModeLabel: {fileID: 1468286379}
-  simDropdown: {fileID: 191543193}
   rankedController: {fileID: 311079904}
   trainingController: {fileID: 311079903}
 --- !u!114 &311079903
@@ -2539,6 +2536,7 @@ MonoBehaviour:
   blockConfirmHighText: {fileID: 54283563}
   confirmFrameText: {fileID: 410216013}
   stunBarToggle: {fileID: 767929471}
+  simModeLabel: {fileID: 1468286379}
   simDropdown: {fileID: 191543193}
   resetHighScoreButton: {fileID: 223610827}
   stateController: {fileID: 311079893}

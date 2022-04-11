@@ -24,6 +24,9 @@ public class TrainingController : MonoBehaviour
     public Toggle stunBarToggle;
 
     [SerializeField]
+    public GameObject simModeLabel;
+
+    [SerializeField]
     public TMP_Dropdown simDropdown;
 
     [SerializeField]
@@ -45,12 +48,10 @@ public class TrainingController : MonoBehaviour
 
     void Start() {
         resetHighScoreButton.onClick.AddListener(ResetHighScore);
-
-        EnableTrainingMode();
     }
 
     public void EnableTrainingMode() {
-        statsPanel.SetActive(true);
+        SetTrainingObjectVisibility(true);
         ClearConfirmFrame();
         ResetCurrentScore();
         LoadHighScores();
@@ -63,7 +64,7 @@ public class TrainingController : MonoBehaviour
     }
 
     public void DisableTrainingMode() {
-        statsPanel.SetActive(false);
+        SetTrainingObjectVisibility(false);
         stateController.PlayerError -= onPlayerError;
         stateController.HitConfirm -= onHitConfirm;
         stateController.BlockConfirm -= onBlockConfirm;
@@ -97,6 +98,13 @@ public class TrainingController : MonoBehaviour
         PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, stunBarEnabled), 0);
         hitConfirmHighText.SetText(hitConfirmCountHigh.ToString());
         blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
+    }
+
+    private void SetTrainingObjectVisibility(bool enabled) {
+        statsPanel.SetActive(enabled);
+        simModeLabel.SetActive(enabled);
+        simDropdown.gameObject.SetActive(enabled);
+        stunBarToggle.gameObject.SetActive(enabled);
     }
 
     private void ClearConfirmFrame() {

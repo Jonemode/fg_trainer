@@ -1,20 +1,10 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayModeController : MonoBehaviour
 {
     [SerializeField]
     public TMP_Dropdown playModeDropdown;
-
-    [SerializeField]
-    public Toggle stunBarToggle;
-
-    [SerializeField]
-    public GameObject simModeLabel;
-
-    [SerializeField]
-    public TMP_Dropdown simDropdown;
 
     [SerializeField]
     public RankedController rankedController;
@@ -26,6 +16,8 @@ public class PlayModeController : MonoBehaviour
     void Start()
     {
         playModeDropdown.onValueChanged.AddListener(OnPlayModeSelect);
+
+        trainingController.EnableTrainingMode();
     }
 
     private void OnPlayModeSelect(int e) {
@@ -34,16 +26,10 @@ public class PlayModeController : MonoBehaviour
             case PlayMode.Training:
                 trainingController.EnableTrainingMode();
                 rankedController.DisableRankedMode();
-                simModeLabel.SetActive(true);
-                simDropdown.gameObject.SetActive(true);
-                stunBarToggle.gameObject.SetActive(true);
                 break;
             case PlayMode.Ranked:
                 rankedController.EnableRankedMode();
                 trainingController.DisableTrainingMode();
-                simModeLabel.SetActive(false);
-                simDropdown.gameObject.SetActive(false);
-                stunBarToggle.gameObject.SetActive(false);
                 break;
         }
     }
