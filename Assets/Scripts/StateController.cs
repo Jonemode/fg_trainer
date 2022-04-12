@@ -192,7 +192,6 @@ public class StateController : MonoBehaviour
                 changeOpponentState(CharacterState.SpecialHitStun);
             } else {
                 changeOpponentState(CharacterState.BlockStun);
-                PlayerError?.Invoke(this, EventArgs.Empty);
             }
        } else {
             playerSpecialStartupFrame += 1;
@@ -203,12 +202,6 @@ public class StateController : MonoBehaviour
     private void handleSpecialRecoveryFrame() {
         if (playerSpecialRecoveryFrame >= GameConfig.specialRecoveryFrames) {
             changePlayerState(CharacterState.Neutral);
-            if (opponentState == CharacterState.SpecialHitStun) {
-                // Player performed special at the right time
-                HitConfirm?.Invoke(this, EventArgs.Empty);
-            } else {
-                PlayerError?.Invoke(this, EventArgs.Empty);
-            }
         } else {
             playerSpecialRecoveryFrame += 1;
         }
@@ -292,13 +285,15 @@ public class StateController : MonoBehaviour
         if (playerState == CharacterState.Neutral || (playerState == CharacterState.Recovery && playerRecoveryFrame < GameConfig.confirmWindowFrames)) {
             if (opponentState == CharacterState.HitStun) {
                 ConfirmFrameSuccess?.Invoke(this, new ConfirmFrameEventArgs(playerRecoveryFrame));
+                HitConfirm?.Invoke(this, EventArgs.Empty);
             } else {
                 ConfirmFrameFailure?.Invoke(this, new ConfirmFrameEventArgs(playerRecoveryFrame));
+                PlayerError?.Invoke(this, EventArgs.Empty);
             }
             changePlayerState(CharacterState.SpecialStartup);
         } else {
-            PlayerError?.Invoke(this, EventArgs.Empty);
             ConfirmFrameFailure?.Invoke(this, new ConfirmFrameEventArgs(playerRecoveryFrame));
+            PlayerError?.Invoke(this, EventArgs.Empty);
         }
     }
 
