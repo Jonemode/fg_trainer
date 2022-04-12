@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class RankedController : MonoBehaviour
@@ -6,8 +8,17 @@ public class RankedController : MonoBehaviour
     [SerializeField]
     public GameObject playerRankContainer;
 
-    private const string playerRankPrefsKey = "player_rank";
-    private PlayerRank playerRank;
+    [SerializeField]
+    public StateController stateController;
+
+    [SerializeField]
+    public TMP_Text LpText;
+
+    private const string playerLpPrefsKey = "player_lp";
+    
+    // tick up towards target to animate the LP number
+    private int targetLp;
+    private int currentLp;
 
     private List<GameObject> playerRanks;
 
@@ -19,16 +30,46 @@ public class RankedController : MonoBehaviour
             playerRanks.Add(child.gameObject);
         }
 
-        int r = PlayerPrefs.GetInt(playerRankPrefsKey);
-        playerRanks[r].SetActive(true);
-        playerRank = (PlayerRank)r;
+        currentLp = PlayerPrefs.GetInt(playerLpPrefsKey);
+        UpdateUI();
+    }
+
+    void Update() {
+        if (currentLp < targetLp) {
+            currentLp += 1;
+            UpdateUI();
+        }
     }
 
     public void EnableRankedMode() {
         playerRankContainer.SetActive(true);
+        LpText.gameObject.SetActive(true);
+        stateController.PlayerError += onPlayerError;
+        stateController.HitConfirm += onHitConfirm;
+        stateController.BlockConfirm += onBlockConfirm;
     }
 
     public void DisableRankedMode() {
         playerRankContainer.SetActive(false);
+        LpText.gameObject.SetActive(false);
+        stateController.PlayerError -= onPlayerError;
+        stateController.HitConfirm -= onHitConfirm;
+        stateController.BlockConfirm -= onBlockConfirm;
+    }
+
+    private void UpdateUI() {
+        LpText.SetText("{0} LP", currentLp);
+    }
+
+    private void onPlayerError(object sender, EventArgs e) {
+
+    }
+
+    private void onHitConfirm(object sender, EventArgs e) {
+
+    }
+
+    private void onBlockConfirm(object sender, EventArgs e) {
+
     }
 }
