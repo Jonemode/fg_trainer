@@ -19,10 +19,7 @@ public class SimulationController : MonoBehaviour
     void Start()
     {
         simDropdown.value = (int)SimMode.PC;
-        Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
-        Application.targetFrameRate = GameConfig.baseFrameRate;
-        playerAnimator.speed = 1;
-        opponentAnimator.speed = 1;
+        SetSimulationSpeed(1);
         simDropdown.onValueChanged.AddListener(OnDropdownChange);
     }
 
@@ -31,37 +28,14 @@ public class SimulationController : MonoBehaviour
     }
 
     private void OnDropdownChange(int e) {
-        SetSimulationMode((SimMode)e);
         trainingController.LoadHighScores();
         trainingController.ResetCurrentScore();
     }
 
-    public void SetSimulationMode(SimMode mode) {
-        switch (mode) {
-            case SimMode.PS4:
-                Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
-                Application.targetFrameRate = GameConfig.baseFrameRate;
-                playerAnimator.speed = 1;
-                opponentAnimator.speed = 1;
-                break;
-            case SimMode.PC:
-                Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
-                Application.targetFrameRate = GameConfig.baseFrameRate;
-                playerAnimator.speed = 1;
-                opponentAnimator.speed = 1;
-                break;
-            case SimMode.HalfSpeed:
-                Time.fixedDeltaTime = 2 * GameConfig.baseFixedDeltaTime;
-                Application.targetFrameRate = GameConfig.baseFrameRate / 2;
-                playerAnimator.speed = 0.5f;
-                opponentAnimator.speed = 0.5f;
-                break;
-            case SimMode.QuarterSpeed:
-                Time.fixedDeltaTime = 4 * GameConfig.baseFixedDeltaTime;
-                Application.targetFrameRate = GameConfig.baseFrameRate / 4;
-                playerAnimator.speed = 0.25f;
-                opponentAnimator.speed = 0.25f;
-                break;
-        }
+    public void SetSimulationSpeed(float speed) {
+        Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime / speed;
+        Application.targetFrameRate = (int)(GameConfig.baseFrameRate * speed);
+        playerAnimator.speed = speed;
+        opponentAnimator.speed = speed;
     }
 }

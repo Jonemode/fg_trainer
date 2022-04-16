@@ -16,10 +16,16 @@ public class RankedController : MonoBehaviour
     public TMP_Dropdown simDropdown;
 
     [SerializeField]
+    public SimulationController simulationController;
+
+    [SerializeField]
     public Toggle stunBarToggle;
 
     [SerializeField]
     public TMP_Text LpText;
+
+    [SerializeField]
+    public Button resetRankButton;
 
     [SerializeField]
     public GameObject leagueContainer;
@@ -51,7 +57,7 @@ public class RankedController : MonoBehaviour
         upArrow = leagueContainer.transform.Find("UpArrow").gameObject;
         downArrow = leagueContainer.transform.Find("DownArrow").gameObject;
 
-        displayLp = PlayerPrefs.GetInt(playerLpPrefsKey);
+        displayLp = 13000;//PlayerPrefs.GetInt(playerLpPrefsKey);
         targetLp = displayLp;
         currentRank = GetRank();
         playerRanks[(int)currentRank].SetActive(true);
@@ -60,12 +66,16 @@ public class RankedController : MonoBehaviour
 
     void Update() {
         if (displayLp < targetLp) {
-            displayLp += 1;
+            if (targetLp - displayLp > 20) {
+                displayLp += 5;
+            } else {
+                displayLp += 1;
+            }
             UpdateLpText();
         }
         if (displayLp > targetLp) {
             if (displayLp - targetLp > 20) {
-                displayLp -= 3;
+                displayLp -= 5;
             } else {
                 displayLp -= 1;
             }            
@@ -77,6 +87,8 @@ public class RankedController : MonoBehaviour
         playerRankContainer.SetActive(true);
         LpText.gameObject.SetActive(true);
         leagueContainer.SetActive(true);
+        resetRankButton.gameObject.SetActive(true);
+        resetRankButton.onClick.AddListener(ResetRank);
         stateController.PlayerError += onPlayerError;
         stateController.HitConfirm += onConfirm;
         stateController.BlockConfirm += onConfirm;
@@ -87,6 +99,8 @@ public class RankedController : MonoBehaviour
         playerRankContainer.SetActive(false);
         LpText.gameObject.SetActive(false);
         leagueContainer.SetActive(false);
+        resetRankButton.onClick.RemoveAllListeners();
+        resetRankButton.gameObject.SetActive(false);
         stateController.PlayerError -= onPlayerError;
         stateController.HitConfirm -= onConfirm;
         stateController.BlockConfirm -= onConfirm;
@@ -96,7 +110,22 @@ public class RankedController : MonoBehaviour
         LpText.SetText("{0} LP", displayLp);
     }
 
+    private void ResetRank() {
+        playerRanks[(int)currentRank].SetActive(false);
+        displayLp = 0;
+        targetLp = 0;
+        currentRank = GetRank();
+        playerRanks[(int)currentRank].SetActive(true);
+        PlayerPrefs.SetInt(playerLpPrefsKey, 0);
+        UpdateLpText();
+        ConfigureGame();
+    }
+
     private void onPlayerError(object sender, EventArgs e) {
+        if (targetLp != displayLp) {
+            // Cannot lose too much lp at once. PlayerError can trigger multiple times in one attack.
+            return;
+        }
         targetLp -= (110 + (10 * (int)currentRank));
         if (targetLp < 0) {
             targetLp = 0;
@@ -199,25 +228,49 @@ public class RankedController : MonoBehaviour
     private void ConfigureGame() {
         switch (currentRank) {
             case PlayerRank.Rookie:
-                simDropdown.value = (int)SimMode.QuarterSpeed;
+                simDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(0.3f);
                 break;
             case PlayerRank.Bronze:
-                simDropdown.value = (int)SimMode.HalfSpeed;
+                simDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(0.4f);
                 break;
             case PlayerRank.SuperBronze:
-            case PlayerRank.UltraBronze:
-                simDropdown.value = (int)SimMode.HalfSpeed;
+                simDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(0.5f);
+                break;
+            case PlayerRank.UltraBronze:
+                simDropdown.value = (int)SimMode.PC;
+                stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(0.6f);
                 break;
             case PlayerRank.Silver:
+                simDropdown.value = (int)SimMode.PC;
+                stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(0.7f);
+                break;
             case PlayerRank.SuperSilver:
+                simDropdown.value = (int)SimMode.PC;
+                stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(0.8f);
+                break;
             case PlayerRank.UltraSilver:
+                simDropdown.value = (int)SimMode.PC;
+                stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(0.9f);
+                break;
             case PlayerRank.Gold:
+                simDropdown.value = (int)SimMode.PC;
+                stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(1);
+                break;
             case PlayerRank.SuperGold:
                 simDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
+                simulationController.SetSimulationSpeed(1);
                 break;
             case PlayerRank.UltraGold:
             case PlayerRank.Platinum:
@@ -231,10 +284,12 @@ public class RankedController : MonoBehaviour
             case PlayerRank.UltimateGrandMaster:
                 simDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = false;
+                simulationController.SetSimulationSpeed(1);
                 break;
             case PlayerRank.Warlord:
                 simDropdown.value = (int)SimMode.PS4;
                 stunBarToggle.isOn = false;
+                simulationController.SetSimulationSpeed(1);
                 break;
         }
     }

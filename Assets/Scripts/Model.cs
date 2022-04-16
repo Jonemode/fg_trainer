@@ -31,9 +31,7 @@ public enum PlayMode
 public enum SimMode
 {
     PS4 = 0,
-    PC = 1,
-    HalfSpeed = 2,
-    QuarterSpeed = 3
+    PC = 1
 }
 
 public enum PlayerRank
