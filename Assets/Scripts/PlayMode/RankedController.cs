@@ -25,6 +25,9 @@ public class RankedController : MonoBehaviour
     public TMP_Text LpText;
 
     [SerializeField]
+    public TMP_Text LpChangeText;
+
+    [SerializeField]
     public Button resetRankButton;
 
     [SerializeField]
@@ -36,6 +39,9 @@ public class RankedController : MonoBehaviour
     private GameObject downArrow;
 
     private const string playerLpPrefsKey = "player_lp";
+
+    // set high and ticks towards -1
+    private int lpChangeTextFrame = -1;
     
     // tick up towards target to animate the LP number
     private int targetLp;
@@ -57,7 +63,7 @@ public class RankedController : MonoBehaviour
         upArrow = leagueContainer.transform.Find("UpArrow").gameObject;
         downArrow = leagueContainer.transform.Find("DownArrow").gameObject;
 
-        displayLp = 13000;//PlayerPrefs.GetInt(playerLpPrefsKey);
+        displayLp = PlayerPrefs.GetInt(playerLpPrefsKey);
         targetLp = displayLp;
         currentRank = GetRank();
         playerRanks[(int)currentRank].SetActive(true);
@@ -65,6 +71,14 @@ public class RankedController : MonoBehaviour
     }
 
     void Update() {
+        if (lpChangeTextFrame >= 0) {
+            lpChangeTextFrame -= 1;
+        }
+        if (lpChangeTextFrame == 0) {
+            LpChangeText.gameObject.SetActive(false);
+        }
+        
+
         if (displayLp < targetLp) {
             if (targetLp - displayLp > 20) {
                 displayLp += 5;
@@ -126,7 +140,9 @@ public class RankedController : MonoBehaviour
             // Cannot lose too much lp at once. PlayerError can trigger multiple times in one attack.
             return;
         }
-        targetLp -= (110 + (10 * (int)currentRank));
+        int change = -(110 + (10 * (int)currentRank));
+        targetLp += change;
+        ShowLpChange(change);
         if (targetLp < 0) {
             targetLp = 0;
         }
@@ -141,11 +157,14 @@ public class RankedController : MonoBehaviour
         } else {
             HideLeagueMessage();
         }
+        
         PlayerPrefs.SetInt(playerLpPrefsKey, targetLp);
     }
 
     private void onConfirm(object sender, EventArgs e) {
-        targetLp += 100 - (5 * (int)currentRank);
+        int change = 100 - (5 * (int)currentRank);
+        targetLp += change;
+        ShowLpChange(change);
         PlayerRank r = GetRank();
         if (r != currentRank) {
             // rank up
@@ -158,6 +177,18 @@ public class RankedController : MonoBehaviour
             HideLeagueMessage();
         }
         PlayerPrefs.SetInt(playerLpPrefsKey, targetLp);
+    }
+
+    private void ShowLpChange(int change) {
+        lpChangeTextFrame = 100;
+        if (change > 0) {
+            LpChangeText.SetText(string.Format("+{0}", change));
+            LpChangeText.color = Color.green;
+        } else {
+            LpChangeText.SetText(change.ToString());
+            LpChangeText.color = Color.red;
+        }
+        LpChangeText.gameObject.SetActive(true);
     }
 
     private void ShowLeagueUp() {
