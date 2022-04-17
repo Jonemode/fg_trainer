@@ -62,9 +62,6 @@ public class StateController : MonoBehaviour
 
     // Start is called before the first frame update
     void Start() {
-        Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
-        Application.targetFrameRate = GameConfig.baseFrameRate;
-
         playerState = CharacterState.Neutral;
         opponentState = CharacterState.Neutral;
 
@@ -78,8 +75,6 @@ public class StateController : MonoBehaviour
     }
 
     void FixedUpdate() {
-        //Debug.Log((int)(1f / Time.unscaledDeltaTime));
-
         // Process button presses
         if (handleNormalButtonClickInFrame == 0) {
             normalButtonClickAction();

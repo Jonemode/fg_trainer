@@ -23,13 +23,20 @@ public class SimulationController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SetSimulationSpeed(1);
+        Application.targetFrameRate = GameConfig.baseFrameRate;
+        Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime;
         CurrentSimMode = SimMode.PC;
         simModeDropdown.value = (int)SimMode.PC;
         simSpeedDropdown.value = (int)SimSpeed.OneHundredPercent;
         simSpeedDropdown.onValueChanged.AddListener(OnSimSpeedChange);
         simModeDropdown.onValueChanged.AddListener(OnSimModeChange);
     }
+
+    /*
+    void FixedUpdate() {
+        Debug.Log((int)(1f / Time.unscaledDeltaTime));
+    }
+    */
 
     public SimMode GetSimMode() {
         return CurrentSimMode;
@@ -49,9 +56,6 @@ public class SimulationController : MonoBehaviour
     }
 
     private void SetSimulationSpeed(float speed) {
-        Time.fixedDeltaTime = GameConfig.baseFixedDeltaTime / speed;
-        Application.targetFrameRate = (int)(GameConfig.baseFrameRate * speed);
-        playerAnimator.speed = speed;
-        opponentAnimator.speed = speed;
+        Time.timeScale = speed;
     }
 }
