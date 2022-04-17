@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -24,10 +25,19 @@ public class SoundSystem : MonoBehaviour
     public AudioSource karinSpecialAttackVoice;
 
     [SerializeField]
+    public AudioSource girlfriendPunch;
+
+    [SerializeField]
+    public AudioSource girlfriendRoundOneFight;
+
+    [SerializeField]
     public GameObject soundSystem;
 
     [SerializeField]
     public TMP_Dropdown bgmSelector;
+
+    [SerializeField]
+    public TMP_Dropdown soundModeSelector;
 
     private AudioSource theGridTheme;
     private AudioSource ringOfGalaxyTheme;
@@ -38,6 +48,14 @@ public class SoundSystem : MonoBehaviour
     private AudioSource nashTheme;
 
     private AudioSource currentlyPlayingTheme;
+
+    private List<AudioSource> girlfriendAttackList;
+    private List<AudioSource> girlfriendLevelDownList;
+    private List<AudioSource> girlfriendLevelUpList;
+
+    private SoundMode currentSoundMode;
+
+    private static System.Random rnd = new System.Random();
 
     void Start() {
         GameObject BGM = soundSystem.transform.Find("BGM").gameObject;
@@ -53,6 +71,29 @@ public class SoundSystem : MonoBehaviour
         bgmSelector.value = rnd.Next(0, 7);
         OnDropdownSelect(bgmSelector.value);
         bgmSelector.onValueChanged.AddListener(OnDropdownSelect);
+
+        currentSoundMode = SoundMode.Girlfriend;
+        soundModeSelector.onValueChanged.AddListener((e) => {
+            currentSoundMode = (SoundMode)e;
+        });
+
+        // Girlfriend
+        GameObject gf = soundSystem.transform.Find("Voice").transform.Find("Girlfriend").gameObject;
+        GameObject gfAttacks = gf.transform.Find("Attacks").gameObject;
+        GameObject gfLevelDown = gf.transform.Find("LevelDown").gameObject;
+        GameObject gfLevelUp = gf.transform.Find("LevelUp").gameObject;
+        girlfriendAttackList = new List<AudioSource>();
+        foreach (Transform attack in gfAttacks.transform) {
+            girlfriendAttackList.Add(attack.GetComponent<AudioSource>());
+        }
+        girlfriendLevelDownList = new List<AudioSource>();
+        foreach (Transform levelDown in gfLevelDown.transform) {
+            girlfriendLevelDownList.Add(levelDown.GetComponent<AudioSource>());
+        }
+        girlfriendLevelUpList = new List<AudioSource>();
+        foreach (Transform levelUp in gfLevelUp.transform) {
+            girlfriendLevelUpList.Add(levelUp.GetComponent<AudioSource>());
+        }
     }
 
     private void OnDropdownSelect(int e) {
@@ -106,10 +147,33 @@ public class SoundSystem : MonoBehaviour
     }
 
     public void PlayKarinAttackVoice() {
-        karinAttackVoice.Play();
+        if (currentSoundMode == SoundMode.Normal) {
+            karinAttackVoice.Play();
+        } else {
+            int i = rnd.Next(0, girlfriendAttackList.Count);
+            girlfriendAttackList[i].Play();
+        }
     }
 
     public void PlayKarinSpecialAttackVoice() {
-        karinSpecialAttackVoice.Play();
+        if (currentSoundMode == SoundMode.Normal) {
+            karinSpecialAttackVoice.Play();
+        } else {
+            girlfriendPunch.Play();
+        }
+    }
+
+    public void PlayLevelDown() {
+        if (currentSoundMode != SoundMode.Normal) {
+            int i = rnd.Next(0, girlfriendLevelDownList.Count);
+            girlfriendLevelDownList[i].Play();
+        }
+    }
+
+    public void PlayLevelUp() {
+        if (currentSoundMode != SoundMode.Normal) {
+            int i = rnd.Next(0, girlfriendLevelUpList.Count);
+            girlfriendLevelUpList[i].Play();
+        }
     }
 }

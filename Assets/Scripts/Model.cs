@@ -45,6 +45,12 @@ public enum SimSpeed
     FortyPercent = 6,
 }
 
+public enum SoundMode
+{
+    Girlfriend = 0,
+    Normal = 1
+}
+
 public enum PlayerRank
 {
     Rookie = 0,

@@ -22,6 +22,9 @@ public class RankedController : MonoBehaviour
     public SimulationController simulationController;
 
     [SerializeField]
+    public SoundSystem soundSystem;
+
+    [SerializeField]
     public Toggle stunBarToggle;
 
     [SerializeField]
@@ -157,6 +160,7 @@ public class RankedController : MonoBehaviour
             currentRank = r;
             ConfigureGameForRank();
             ShowLeagueDown();
+            soundSystem.PlayLevelDown();
         } else {
             HideLeagueMessage();
         }
@@ -176,6 +180,7 @@ public class RankedController : MonoBehaviour
             currentRank = r;
             ConfigureGameForRank();
             ShowLeagueUp();
+            soundSystem.PlayLevelUp();
         } else {
             HideLeagueMessage();
         }
