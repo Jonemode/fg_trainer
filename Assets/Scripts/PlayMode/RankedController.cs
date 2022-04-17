@@ -106,7 +106,7 @@ public class RankedController : MonoBehaviour
         stateController.PlayerError += onPlayerError;
         stateController.HitConfirm += onConfirm;
         stateController.BlockConfirm += onConfirm;
-        ConfigureGame();
+        ConfigureGameForRank();
     }
 
     public void DisableRankedMode() {
@@ -118,6 +118,7 @@ public class RankedController : MonoBehaviour
         stateController.PlayerError -= onPlayerError;
         stateController.HitConfirm -= onConfirm;
         stateController.BlockConfirm -= onConfirm;
+        simulationController.SetSimulationSpeed(1);
     }
 
     private void UpdateLpText() {
@@ -132,7 +133,7 @@ public class RankedController : MonoBehaviour
         playerRanks[(int)currentRank].SetActive(true);
         PlayerPrefs.SetInt(playerLpPrefsKey, 0);
         UpdateLpText();
-        ConfigureGame();
+        ConfigureGameForRank();
     }
 
     private void onPlayerError(object sender, EventArgs e) {
@@ -152,7 +153,7 @@ public class RankedController : MonoBehaviour
             playerRanks[(int)r + 1].SetActive(false);
             playerRanks[(int)r].SetActive(true);
             currentRank = r;
-            ConfigureGame();
+            ConfigureGameForRank();
             ShowLeagueDown();
         } else {
             HideLeagueMessage();
@@ -171,7 +172,7 @@ public class RankedController : MonoBehaviour
             playerRanks[(int)r - 1].SetActive(false);
             playerRanks[(int)r].SetActive(true);
             currentRank = r;
-            ConfigureGame();
+            ConfigureGameForRank();
             ShowLeagueUp();
         } else {
             HideLeagueMessage();
@@ -256,7 +257,7 @@ public class RankedController : MonoBehaviour
         }
     }
 
-    private void ConfigureGame() {
+    private void ConfigureGameForRank() {
         switch (currentRank) {
             case PlayerRank.Rookie:
                 simDropdown.value = (int)SimMode.PC;
@@ -284,20 +285,12 @@ public class RankedController : MonoBehaviour
                 simulationController.SetSimulationSpeed(0.7f);
                 break;
             case PlayerRank.SuperSilver:
+            case PlayerRank.UltraSilver:
                 simDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
                 simulationController.SetSimulationSpeed(0.8f);
                 break;
-            case PlayerRank.UltraSilver:
-                simDropdown.value = (int)SimMode.PC;
-                stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(0.9f);
-                break;
             case PlayerRank.Gold:
-                simDropdown.value = (int)SimMode.PC;
-                stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(1);
-                break;
             case PlayerRank.SuperGold:
                 simDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
