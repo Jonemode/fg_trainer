@@ -254,7 +254,7 @@ public class StateController : MonoBehaviour
             if (simulationController.GetSimMode() == SimMode.PS4) {
                 handleNormalButtonClickInFrame = GameConfig.ps4FrameLag;
             } else {
-                handleNormalButtonClickInFrame = 0;
+                normalButtonClickAction();
             }
         }
     }
@@ -271,7 +271,7 @@ public class StateController : MonoBehaviour
             if (simulationController.GetSimMode() == SimMode.PS4) {
                 handleSpecialButtonClickInFrame = GameConfig.ps4FrameLag;
             } else {
-                handleSpecialButtonClickInFrame = 0;
+                specialButtonClickAction();
             }
         }
     }

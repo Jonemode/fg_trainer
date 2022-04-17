@@ -34,6 +34,17 @@ public enum SimMode
     PC = 1
 }
 
+public enum SimSpeed
+{
+    OneHundredPercent = 0,
+    NinetyPercent = 1,
+    EightyPercent = 2,
+    SeventyPercent = 3,
+    SixtyPercent = 4,
+    FiftyPercent = 5,
+    FortyPercent = 6,
+}
+
 public enum PlayerRank
 {
     Rookie = 0,

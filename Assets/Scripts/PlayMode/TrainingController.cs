@@ -27,7 +27,13 @@ public class TrainingController : MonoBehaviour
     public GameObject simModeLabel;
 
     [SerializeField]
-    public TMP_Dropdown simDropdown;
+    public TMP_Dropdown simModeDropdown;
+
+    [SerializeField]
+    public GameObject simSpeedLabel;
+
+    [SerializeField]
+    public TMP_Dropdown simSpeedDropdown;
 
     [SerializeField]
     public Button resetHighScoreButton;
@@ -43,8 +49,8 @@ public class TrainingController : MonoBehaviour
     private int hitConfirmCountHigh = 0;
     private int blockConfirmCountHigh = 0;
 
-    private const string hitConfirmPlayerPrefsKey = "hit_confirm_high_mode_{0}_stunbar_{1}";
-    private const string blockConfirmPlayerPrefsKey = "block_confirm_high_mode_{0}_stunbar_{1}";
+    private const string hitConfirmPlayerPrefsKey = "hit_confirm_high_mode_{0}_speed_{1}_stunbar_{2}";
+    private const string blockConfirmPlayerPrefsKey = "block_confirm_high_mode_{0}_speed_{1}_stunbar_{2}";
 
     void Start() {
         resetHighScoreButton.onClick.AddListener(ResetHighScore);
@@ -75,9 +81,10 @@ public class TrainingController : MonoBehaviour
 
     public void LoadHighScores() {
         bool stunBarEnabled = stunBarToggle.isOn;
-        int simMode = simDropdown.value;
-        hitConfirmCountHigh = PlayerPrefs.GetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, stunBarEnabled));
-        blockConfirmCountHigh = PlayerPrefs.GetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, stunBarEnabled));
+        int simMode = simModeDropdown.value;
+        int simSpeed = simSpeedDropdown.value;
+        hitConfirmCountHigh = PlayerPrefs.GetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, simSpeed, stunBarEnabled));
+        blockConfirmCountHigh = PlayerPrefs.GetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, simSpeed, stunBarEnabled));
         hitConfirmHighText.SetText(hitConfirmCountHigh.ToString());
         blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
     }
@@ -93,9 +100,10 @@ public class TrainingController : MonoBehaviour
         hitConfirmCountHigh = 0;
         blockConfirmCountHigh = 0;
         bool stunBarEnabled = stunBarToggle.isOn;
-        int simMode = simDropdown.value;
-        PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, stunBarEnabled), 0);
-        PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, stunBarEnabled), 0);
+        int simMode = simModeDropdown.value;
+        int simSpeed = simSpeedDropdown.value;
+        PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, simSpeed, stunBarEnabled), 0);
+        PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, simSpeed, stunBarEnabled), 0);
         hitConfirmHighText.SetText(hitConfirmCountHigh.ToString());
         blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
     }
@@ -103,7 +111,9 @@ public class TrainingController : MonoBehaviour
     private void SetTrainingObjectVisibility(bool enabled) {
         statsPanel.SetActive(enabled);
         simModeLabel.SetActive(enabled);
-        simDropdown.gameObject.SetActive(enabled);
+        simSpeedLabel.SetActive(enabled);
+        simModeDropdown.gameObject.SetActive(enabled);
+        simSpeedDropdown.gameObject.SetActive(enabled);
         stunBarToggle.gameObject.SetActive(enabled);
     }
 
@@ -137,9 +147,10 @@ public class TrainingController : MonoBehaviour
         hitConfirmCount++;
         if (hitConfirmCount > hitConfirmCountHigh) {
             hitConfirmCountHigh = hitConfirmCount;
-            int simMode = simDropdown.value;
+            int simMode = simModeDropdown.value;
+            int simSpeed = simSpeedDropdown.value;
             bool stunBarEnabled = stunBarToggle.isOn;
-            PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, stunBarEnabled), hitConfirmCountHigh);
+            PlayerPrefs.SetInt(string.Format(hitConfirmPlayerPrefsKey, simMode, simSpeed, stunBarEnabled), hitConfirmCountHigh);
             hitConfirmHighText.SetText(hitConfirmCountHigh.ToString());
         }
         hitConfirmCountText.SetText(hitConfirmCount.ToString());
@@ -149,9 +160,10 @@ public class TrainingController : MonoBehaviour
         blockConfirmCount++;
         if (blockConfirmCount > blockConfirmCountHigh) {
             blockConfirmCountHigh = blockConfirmCount;
-            int simMode = simDropdown.value;
+            int simMode = simModeDropdown.value;
+            int simSpeed = simSpeedDropdown.value;
             bool stunBarEnabled = stunBarToggle.isOn;
-            PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, stunBarEnabled), blockConfirmCountHigh);
+            PlayerPrefs.SetInt(string.Format(blockConfirmPlayerPrefsKey, simMode, simSpeed, stunBarEnabled), blockConfirmCountHigh);
             blockConfirmHighText.SetText(blockConfirmCountHigh.ToString());
         }
         confirmFrameText.SetText("");

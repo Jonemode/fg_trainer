@@ -13,7 +13,10 @@ public class RankedController : MonoBehaviour
     public StateController stateController;
 
     [SerializeField]
-    public TMP_Dropdown simDropdown;
+    public TMP_Dropdown simModeDropdown;
+
+    [SerializeField]
+    public TMP_Dropdown simSpeedDropdown;
 
     [SerializeField]
     public SimulationController simulationController;
@@ -118,7 +121,6 @@ public class RankedController : MonoBehaviour
         stateController.PlayerError -= onPlayerError;
         stateController.HitConfirm -= onConfirm;
         stateController.BlockConfirm -= onConfirm;
-        simulationController.SetSimulationSpeed(1);
     }
 
     private void UpdateLpText() {
@@ -260,41 +262,41 @@ public class RankedController : MonoBehaviour
     private void ConfigureGameForRank() {
         switch (currentRank) {
             case PlayerRank.Rookie:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(0.3f);
+                simSpeedDropdown.value = (int)SimSpeed.FortyPercent;
                 break;
             case PlayerRank.Bronze:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(0.4f);
+                simSpeedDropdown.value = (int)SimSpeed.FiftyPercent;
                 break;
             case PlayerRank.SuperBronze:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(0.5f);
+                simSpeedDropdown.value = (int)SimSpeed.SixtyPercent;
                 break;
             case PlayerRank.UltraBronze:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(0.6f);
+                simSpeedDropdown.value = (int)SimSpeed.SeventyPercent;
                 break;
             case PlayerRank.Silver:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(0.7f);
+                simSpeedDropdown.value = (int)SimSpeed.EightyPercent;
                 break;
             case PlayerRank.SuperSilver:
             case PlayerRank.UltraSilver:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(0.8f);
+                simSpeedDropdown.value = (int)SimSpeed.NinetyPercent;
                 break;
             case PlayerRank.Gold:
             case PlayerRank.SuperGold:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = true;
-                simulationController.SetSimulationSpeed(1);
+                simSpeedDropdown.value = (int)SimSpeed.OneHundredPercent;
                 break;
             case PlayerRank.UltraGold:
             case PlayerRank.Platinum:
@@ -306,14 +308,14 @@ public class RankedController : MonoBehaviour
             case PlayerRank.Master:
             case PlayerRank.GrandMaster:
             case PlayerRank.UltimateGrandMaster:
-                simDropdown.value = (int)SimMode.PC;
+                simModeDropdown.value = (int)SimMode.PC;
                 stunBarToggle.isOn = false;
-                simulationController.SetSimulationSpeed(1);
+                simSpeedDropdown.value = (int)SimSpeed.OneHundredPercent;
                 break;
             case PlayerRank.Warlord:
-                simDropdown.value = (int)SimMode.PS4;
+                simModeDropdown.value = (int)SimMode.PS4;
                 stunBarToggle.isOn = false;
-                simulationController.SetSimulationSpeed(1);
+                simSpeedDropdown.value = (int)SimSpeed.OneHundredPercent;
                 break;
         }
     }
