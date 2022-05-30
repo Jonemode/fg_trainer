@@ -149,12 +149,16 @@ public class StateController : MonoBehaviour
         if (playerStartupFrame >= GameConfig.startupFrames) {
             // Active frames start
             changePlayerState(CharacterState.Active);
-            if (rnd.Next(1, 100) <= GameConfig.opponentDefendPercentage) {
-                // Opponent blocked
-                changeOpponentState(CharacterState.BlockStun);
-            } else {
-                // Opponent got hit
-                changeOpponentState(CharacterState.HitStun);
+            bool opponentHasHitbox = opponentState == CharacterState.Neutral;
+            opponentHasHitbox |= opponentState == CharacterState.WakeUp && opponentWakeUpFrame >= GameConfig.wakeUpHitboxActivateFrame;
+            if (opponentHasHitbox) {
+                if (rnd.Next(1, 100) <= GameConfig.opponentDefendPercentage) {
+                    // Opponent blocked
+                    changeOpponentState(CharacterState.BlockStun);
+                } else {
+                    // Opponent got hit
+                    changeOpponentState(CharacterState.HitStun);
+                }
             }
         } else {
             playerStartupFrame += 1;
@@ -255,10 +259,8 @@ public class StateController : MonoBehaviour
     }
 
     private void normalButtonClickAction() {
-        if (playerState == CharacterState.Neutral && opponentState == CharacterState.Neutral) {
-            NormalButtonPress?.Invoke(this, EventArgs.Empty);
-            changePlayerState(CharacterState.Crouch);
-        }
+        NormalButtonPress?.Invoke(this, EventArgs.Empty);
+        changePlayerState(CharacterState.Crouch);
     }
 
     private void specialButtonClickTrigger(BaseEventData e) {
