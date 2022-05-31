@@ -30,12 +30,6 @@ public class SoundSystem : MonoBehaviour
     [SerializeField]
     public TMP_Dropdown bgmSelector;
 
-    private AudioSource theGridTheme;
-    private AudioSource ringOfGalaxyTheme;
-    private AudioSource suzakuCastleTheme;
-    private AudioSource airForceBaseTheme;
-    private AudioSource fangTheme;
-    private AudioSource karinTheme;
     private AudioSource nashTheme;
 
     private AudioSource currentlyPlayingTheme;
