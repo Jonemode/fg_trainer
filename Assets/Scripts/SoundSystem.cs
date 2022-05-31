@@ -34,9 +34,9 @@ public class SoundSystem : MonoBehaviour
 
     private AudioSource currentlyPlayingTheme;
 
-    private List<AudioSource> girlfriendAttackList;
-    private List<AudioSource> girlfriendLevelDownList;
-    private List<AudioSource> girlfriendLevelUpList;
+    private List<AudioSource> attackList;
+    private List<AudioSource> levelDownList;
+    private List<AudioSource> levelUpList;
 
     private static System.Random rnd = new System.Random();
 
@@ -52,21 +52,21 @@ public class SoundSystem : MonoBehaviour
         */
 
         // Girlfriend
-        GameObject gf = soundSystem.transform.Find("Voice").transform.Find("Girlfriend").gameObject;
-        GameObject gfAttacks = gf.transform.Find("Attacks").gameObject;
-        GameObject gfLevelDown = gf.transform.Find("LevelDown").gameObject;
-        GameObject gfLevelUp = gf.transform.Find("LevelUp").gameObject;
-        girlfriendAttackList = new List<AudioSource>();
-        foreach (Transform attack in gfAttacks.transform) {
-            girlfriendAttackList.Add(attack.GetComponent<AudioSource>());
+        GameObject voice = soundSystem.transform.Find("Voice").gameObject;
+        GameObject attacks = voice.transform.Find("Attacks").gameObject;
+        GameObject levelDowns = voice.transform.Find("LevelDown").gameObject;
+        GameObject levelUps = voice.transform.Find("LevelUp").gameObject;
+        attackList = new List<AudioSource>();
+        foreach (Transform attack in attacks.transform) {
+            attackList.Add(attack.GetComponent<AudioSource>());
         }
-        girlfriendLevelDownList = new List<AudioSource>();
-        foreach (Transform levelDown in gfLevelDown.transform) {
-            girlfriendLevelDownList.Add(levelDown.GetComponent<AudioSource>());
+        levelDownList = new List<AudioSource>();
+        foreach (Transform levelDown in levelDowns.transform) {
+            levelDownList.Add(levelDown.GetComponent<AudioSource>());
         }
-        girlfriendLevelUpList = new List<AudioSource>();
-        foreach (Transform levelUp in gfLevelUp.transform) {
-            girlfriendLevelUpList.Add(levelUp.GetComponent<AudioSource>());
+        levelUpList = new List<AudioSource>();
+        foreach (Transform levelUp in levelUps.transform) {
+            levelUpList.Add(levelUp.GetComponent<AudioSource>());
         }
     }
 
@@ -103,8 +103,8 @@ public class SoundSystem : MonoBehaviour
     }
 
     public void PlayKarinAttackVoice() {
-        int i = rnd.Next(0, girlfriendAttackList.Count);
-        girlfriendAttackList[i].Play();
+        int i = rnd.Next(0, attackList.Count);
+        attackList[i].Play();
     }
 
     public void PlayKarinSpecialAttackVoice() {
@@ -112,12 +112,12 @@ public class SoundSystem : MonoBehaviour
     }
 
     public void PlayLevelDown() {
-        int i = rnd.Next(0, girlfriendLevelDownList.Count);
-        girlfriendLevelDownList[i].Play();
+        int i = rnd.Next(0, levelDownList.Count);
+        levelDownList[i].Play();
     }
 
     public void PlayLevelUp() {
-        int i = rnd.Next(0, girlfriendLevelUpList.Count);
-        girlfriendLevelUpList[i].Play();
+        int i = rnd.Next(0, levelUpList.Count);
+        levelUpList[i].Play();
     }
 }
