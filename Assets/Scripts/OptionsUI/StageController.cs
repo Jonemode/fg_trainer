@@ -11,9 +11,7 @@ public class StageController : MonoBehaviour
 
     private GameObject theGrid;
     private GameObject airForceBase;
-    private GameObject ringOfGalaxy;
     private GameObject suzakuCastle;
-    private GameObject shadalooHideout;
 
     private GameObject currentStage;
 
@@ -22,12 +20,10 @@ public class StageController : MonoBehaviour
     {
         theGrid = backgrounds.transform.Find("TheGrid").gameObject;
         airForceBase = backgrounds.transform.Find("AirForceBase").gameObject;
-        ringOfGalaxy = backgrounds.transform.Find("RingOfGalaxy").gameObject;
         suzakuCastle = backgrounds.transform.Find("SuzakuCastle").gameObject;
-        shadalooHideout = backgrounds.transform.Find("ShadalooHideout").gameObject;
 
         System.Random rnd = new System.Random();
-        stageSelector.value = rnd.Next(0, 5);
+        stageSelector.value = rnd.Next(0, 3);
         OnDropdownChange(stageSelector.value);
         stageSelector.onValueChanged.AddListener(OnDropdownChange);
     }
@@ -41,13 +37,7 @@ public class StageController : MonoBehaviour
                 ChangeStage(airForceBase);
                 break;
             case 2:
-                ChangeStage(ringOfGalaxy);
-                break;
-            case 3:
                 ChangeStage(suzakuCastle);
-                break;
-            case 4:
-                ChangeStage(shadalooHideout);
                 break;
         }
     }
