@@ -16,7 +16,7 @@ public static class GameConfig
     public const int blockStunRecoveryFrames = 23;
     public const int specialHitStunRecoveryFrames = 99;
     public const int wakeUpFrames = 51;
-    public const int wakeUpHitboxActivateFrame = 30;
+    public const int wakeUpHitboxActivateFrame = 25;
 
     public const int opponentDefendPercentage = 50;
     public const int ps4FrameLag = 3;

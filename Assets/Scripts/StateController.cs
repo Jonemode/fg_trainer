@@ -259,8 +259,10 @@ public class StateController : MonoBehaviour
     }
 
     private void normalButtonClickAction() {
-        NormalButtonPress?.Invoke(this, EventArgs.Empty);
-        changePlayerState(CharacterState.Crouch);
+        if (playerState == CharacterState.Neutral) {
+            NormalButtonPress?.Invoke(this, EventArgs.Empty);
+            changePlayerState(CharacterState.Crouch);
+        }
     }
 
     private void specialButtonClickTrigger(BaseEventData e) {
